@@ -146,7 +146,35 @@ def save_prompts_to_html(prompts):
         f.write(new_content)
     print(f"✅ Saved {len(prompts)} prompts")
 
-def generate_5_prompts():
+def is_duplicate(new_prompt, existing_prompts):
+    """Проверяет, есть ли уже такой промт в базе"""
+    new_title = new_prompt.get("title", "").lower().strip()
+    new_preview = new_prompt.get("preview", "").lower().strip()[:50]
+    
+    for existing in existing_prompts:
+        existing_title = existing.get("title", "").lower().strip()
+        existing_preview = existing.get("preview", "").lower().strip()[:50]
+        
+        # Точное совпадение заголовка
+        if new_title == existing_title:
+            return True
+        
+        # Совпадение начала preview
+        if new_preview and new_preview == existing_preview:
+            return True
+        
+        # Частичное совпадение заголовка (70% слов)
+        new_words = set(new_title.split())
+        existing_words = set(existing_title.split())
+        if new_words and existing_words:
+            common = len(new_words & existing_words)
+            if common / max(len(new_words), len(existing_words)) > 0.7:
+                return True
+    
+    return False
+
+def generate_5_prompts_batch():
+    """Генерирует 5 промтов (внутренняя функция)"""
     selected_categories = random.sample(CATEGORIES, min(5, len(CATEGORIES)))
     
     categories_info = []
@@ -163,7 +191,7 @@ def generate_5_prompts():
         })
         categories_text.append(f"{len(categories_text)+1}. {cat['display']} / {SUBCATEGORY_NAMES.get(sub, sub)} / {topic}")
     
-    prompt_text = f"""Создай 5 уникальных промтов для нейросетей.
+    prompt_text = f"""Создай 5 уникальных промтов для нейросетей. ВАЖНО: промты должны быть РАЗНЫМИ и НЕ ПОВТОРЯТЬ стандартные шаблоны.
 
 Нужны промты на темы:
 {chr(10).join(categories_text)}
@@ -171,15 +199,16 @@ def generate_5_prompts():
 Формат ответа (ТОЛЬКО JSON массив, без пояснений):
 [
   {{
-    "title": "название (10-60 символов, русский)",
+    "title": "название (10-60 символов, русский, уникальное, не шаблонное)",
     "preview": "краткое описание (100-150 символов)",
     "full": "полная инструкция с [переменными]. 300-600 символов."
   }}
 ]
 
 Требования:
-- Каждый промт уникальный и полезный
-- Добавляй [переменные в квадратных скобках]
+- Каждый промт должен быть УНИКАЛЬНЫМ и не похожим на другие
+- Избегай общих фраз типа "создание", "разработка", "анализ" без контекста
+- Добавляй конкретные [переменные в квадратных скобках]
 - Структурируй ответ
 - Язык: русский"""
     
@@ -216,6 +245,33 @@ def generate_5_prompts():
         print(f"❌ JSON error: {e}")
         return []
 
+def generate_unique_prompts(existing_prompts, target_count=5, max_attempts=10):
+    """Генерирует уникальные промты, пропуская дубликаты"""
+    new_prompts = []
+    attempts = 0
+    
+    while len(new_prompts) < target_count and attempts < max_attempts:
+        attempts += 1
+        print(f"   🔄 Attempt {attempts} to get {target_count - len(new_prompts)} more prompts...")
+        
+        generated = generate_5_prompts_batch()
+        
+        if not generated:
+            print("   ❌ Generation failed")
+            break
+        
+        for prompt in generated:
+            if not is_duplicate(prompt, existing_prompts + new_prompts):
+                new_prompts.append(prompt)
+                print(f"   ✅ Unique: {prompt['title'][:50]}...")
+            else:
+                print(f"   ⚠️ Duplicate skipped: {prompt['title'][:50]}...")
+        
+        if len(new_prompts) < target_count:
+            print(f"   📌 Need {target_count - len(new_prompts)} more, retrying...")
+    
+    return new_prompts[:target_count]
+
 def main():
     print(f"🚀 Started at {datetime.now()}")
     print(f"📡 Gemini: {'✅' if GEMINI_API_KEY else '❌'}")
@@ -227,15 +283,19 @@ def main():
         print("❌ Could not read prompts - exiting")
         return
     
+    print(f"📊 Existing unique prompts: {len(existing)}")
+    
     if len(existing) == 0:
         print("📋 No existing prompts found. Starting fresh...")
         next_id = 1
     else:
         next_id = max(p["id"] for p in existing) + 1
     
-    new_prompts = generate_5_prompts()
+    # Генерируем 5 уникальных промтов
+    new_prompts = generate_unique_prompts(existing, target_count=5, max_attempts=10)
+    
     if not new_prompts:
-        print("❌ Generation failed")
+        print("❌ Generation failed - no unique prompts added")
         return
     
     for i, p in enumerate(new_prompts):
@@ -244,7 +304,7 @@ def main():
         print(f"  ✅ Added: {p['title']}")
     
     save_prompts_to_html(existing)
-    print(f"📊 Total prompts: {len(existing)}")
+    print(f"📊 Total unique prompts: {len(existing)}")
 
 if __name__ == "__main__":
     main()
