@@ -10,10 +10,8 @@ import time
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
 
-# Gemini API
+# API endpoints
 GEMINI_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_API_KEY}"
-
-# Groq API
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 # Категории
@@ -44,39 +42,30 @@ TOPICS = [
     "генерация контента", "анализ данных", "автоматизация", "обработка текста",
     "генерация изображений", "распознавание речи", "перевод", "резюмирование",
     "классификация", "прогнозирование", "рекомендательные системы", "SEO оптимизация",
-    "SMM продвижение", "email маркетинг", "продажи", "управление проектами"
+    "SMM продвижение", "email маркетинг", "продажи", "управление проектами",
+    "копирайтинг", "брендинг", "аналитика", "тестирование", "DevOps"
 ]
 
 def call_gemini(prompt):
-    """Вызов Gemini API"""
     if not GEMINI_API_KEY:
-        print("⚠️ No Gemini API key")
         return None
-    
     headers = {"Content-Type": "application/json"}
     data = {
         "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"temperature": 0.8, "maxOutputTokens": 800}
+        "generationConfig": {"temperature": 0.8, "maxOutputTokens": 1200}
     }
-    
     try:
-        response = requests.post(GEMINI_URL, headers=headers, json=data, timeout=30)
+        response = requests.post(GEMINI_URL, headers=headers, json=data, timeout=45)
         if response.status_code == 200:
             result = response.json()
             return result["candidates"][0]["content"]["parts"][0]["text"]
-        else:
-            print(f"⚠️ Gemini error {response.status_code}")
-            return None
-    except Exception as e:
-        print(f"⚠️ Gemini exception: {e}")
+        return None
+    except Exception:
         return None
 
 def call_groq(prompt):
-    """Вызов Groq API (бесплатно, быстро)"""
     if not GROQ_API_KEY:
-        print("⚠️ No Groq API key")
         return None
-    
     headers = {
         "Authorization": f"Bearer {GROQ_API_KEY}",
         "Content-Type": "application/json"
@@ -85,37 +74,22 @@ def call_groq(prompt):
         "model": "llama-3.3-70b-versatile",
         "messages": [{"role": "user", "content": prompt}],
         "temperature": 0.8,
-        "max_tokens": 800
+        "max_tokens": 1200
     }
-    
     try:
-        response = requests.post(GROQ_URL, headers=headers, json=data, timeout=30)
+        response = requests.post(GROQ_URL, headers=headers, json=data, timeout=45)
         if response.status_code == 200:
             result = response.json()
             return result["choices"][0]["message"]["content"]
-        else:
-            print(f"⚠️ Groq error {response.status_code}")
-            return None
-    except Exception as e:
-        print(f"⚠️ Groq exception: {e}")
+        return None
+    except Exception:
         return None
 
 def call_any_api(prompt):
-    """Пытается вызвать Gemini, если не работает — Groq"""
-    print("🔄 Trying Gemini...")
     result = call_gemini(prompt)
     if result:
-        print("✅ Gemini succeeded")
         return result
-    
-    print("🔄 Gemini failed, trying Groq...")
-    result = call_groq(prompt)
-    if result:
-        print("✅ Groq succeeded")
-        return result
-    
-    print("❌ Both APIs failed")
-    return None
+    return call_groq(prompt)
 
 def parse_prompts_from_html():
     with open("index.html", "r", encoding="utf-8") as f:
@@ -125,8 +99,7 @@ def parse_prompts_from_html():
     if not match:
         return []
     try:
-        prompts = eval(match.group(1))
-        return prompts
+        return eval(match.group(1))
     except:
         return []
 
@@ -140,35 +113,53 @@ def save_prompts_to_html(prompts):
         f.write(new_content)
     print(f"✅ Saved {len(prompts)} prompts")
 
-def generate_new_prompt():
-    category = random.choice(CATEGORIES)
-    subcategory = random.choice(category["sub"])
-    topic = random.choice(TOPICS)
+def generate_5_prompts():
+    """Генерирует 5 уникальных промтов за один запрос"""
     
-    prompt_text = f"""Ты — генератор промтов для нейросетей. Создай ОДИН уникальный промт.
+    # Случайные категории для разнообразия
+    selected_categories = random.sample(CATEGORIES, min(5, len(CATEGORIES)))
+    
+    categories_info = []
+    for cat in selected_categories:
+        sub = random.choice(cat["sub"])
+        topic = random.choice(TOPICS)
+        categories_info.append({
+            "category": cat["name"],
+            "category_display": cat["display"],
+            "subcategory": sub,
+            "subcategory_display": SUBCATEGORY_NAMES.get(sub, sub),
+            "topic": topic
+        })
+    
+    prompt_text = f"""Ты — генератор промтов для нейросетей. Создай 5 (ПЯТЬ) уникальных промтов.
 
-Категория: {category['display']}
-Подкатегория: {SUBCATEGORY_NAMES.get(subcategory, subcategory)}
-Тема: {topic}
+Вот какие нужны промты:
 
-Формат (только JSON, без пояснений):
-{{
-  "title": "название (10-60 символов, русский)",
-  "preview": "краткое описание (100-150 символов, русский)",
-  "full": "полная инструкция с [переменными]. Длина 300-600 символов. Используй списки и шаги. Русский язык."
-}}
+{chr(10).join([f"{i+1}. Категория: {c['category_display']}, Подкатегория: {c['subcategory_display']}, Тема: {c['topic']}" for i, c in enumerate(categories_info)])}
+
+Формат ответа (только JSON массив из 5 объектов, без пояснений):
+[
+  {{
+    "title": "название (10-60 символов, русский)",
+    "preview": "краткое описание (100-150 символов, русский)",
+    "full": "полная инструкция с [переменными]. Длина 300-600 символов. Используй списки и шаги."
+  }},
+  ... и так 5 раз
+]
 
 Требования:
-- Промт должен быть практичным и полезным
-- Добавь [переменные в квадратных скобках]
+- Каждый промт должен быть уникальным и полезным
+- Добавляй [переменные в квадратных скобках]
 - Структурируй ответ (списки, шаги)
-- Не повторяй шаблонные фразы"""
+- Не повторяй шаблонные фразы
+- Язык: русский"""
     
-    print(f"🎯 Generating: {category['display']} / {SUBCATEGORY_NAMES.get(subcategory, subcategory)} / {topic}")
-    
+    print("🎯 Generating 5 prompts in one request...")
     response = call_any_api(prompt_text)
+    
     if not response:
-        return None
+        print("❌ API call failed")
+        return []
     
     # Очистка ответа
     response = response.strip()
@@ -181,16 +172,24 @@ def generate_new_prompt():
     response = response.strip()
     
     try:
-        prompt_data = json.loads(response)
-        return {
-            **prompt_data,
-            "category": category["name"],
-            "subcategory": subcategory
-        }
+        prompts_data = json.loads(response)
+        if not isinstance(prompts_data, list):
+            print("❌ Response is not a list")
+            return []
+        
+        # Добавляем категории к каждому промту
+        result = []
+        for i, prompt_data in enumerate(prompts_data[:5]):
+            if i < len(categories_info):
+                result.append({
+                    **prompt_data,
+                    "category": categories_info[i]["category"],
+                    "subcategory": categories_info[i]["subcategory"]
+                })
+        return result
     except json.JSONDecodeError as e:
         print(f"❌ JSON error: {e}")
-        print(f"Response: {response[:200]}...")
-        return None
+        return []
 
 def main():
     print(f"🚀 Starting auto-generation at {datetime.now()}")
@@ -202,23 +201,23 @@ def main():
         print("❌ Could not load prompts")
         return
     
-    print(f"📊 Existing: {len(existing_prompts)}")
+    print(f"📊 Existing prompts: {len(existing_prompts)}")
     
-    # Генерируем 1 новый промт
-    new_prompt = generate_new_prompt()
+    # Генерируем 5 новых промтов
+    new_prompts = generate_5_prompts()
     
-    if not new_prompt:
+    if not new_prompts:
         print("❌ Generation failed")
         return
     
     next_id = max(p["id"] for p in existing_prompts) + 1
-    new_prompt["id"] = next_id
+    for i, prompt in enumerate(new_prompts):
+        prompt["id"] = next_id + i
+        existing_prompts.append(prompt)
+        print(f"  ✅ Added: {prompt['title']}")
     
-    existing_prompts.append(new_prompt)
     save_prompts_to_html(existing_prompts)
-    
-    print(f"✅ Added: {new_prompt['title']}")
-    print(f"📊 Total: {len(existing_prompts)}")
+    print(f"📊 Total prompts now: {len(existing_prompts)}")
 
 if __name__ == "__main__":
     main()
