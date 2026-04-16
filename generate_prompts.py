@@ -4,12 +4,19 @@ import requests
 from datetime import datetime
 import os
 import random
+import time
+
+# API ключи
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
 
 # Gemini API
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 GEMINI_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_API_KEY}"
 
-# Категории и подкатегории
+# Groq API
+GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
+
+# Категории
 CATEGORIES = [
     {"name": "marketing", "display": "📢 Маркетинг", "sub": ["smm", "seo", "email", "copywriting", "ads", "branding", "analytics"]},
     {"name": "coding", "display": "💻 Программирование", "sub": ["python", "javascript", "sql", "algorithms", "devops", "testing", "frontend", "backend"]},
@@ -32,27 +39,83 @@ SUBCATEGORY_NAMES = {
     "lesson": "Уроки", "exam": "Тесты", "explain": "Объяснения", "course": "Курсы", "summary": "Конспекты"
 }
 
-# Темы для разнообразия
 TOPICS = [
-    "нейросети", "искусственный интеллект", "машинное обучение", "чат-боты", 
+    "нейросети", "искусственный интеллект", "машинное обучение", "чат-боты",
     "генерация контента", "анализ данных", "автоматизация", "обработка текста",
     "генерация изображений", "распознавание речи", "перевод", "резюмирование",
-    "классификация", "прогнозирование", "рекомендательные системы"
+    "классификация", "прогнозирование", "рекомендательные системы", "SEO оптимизация",
+    "SMM продвижение", "email маркетинг", "продажи", "управление проектами"
 ]
 
 def call_gemini(prompt):
+    """Вызов Gemini API"""
+    if not GEMINI_API_KEY:
+        print("⚠️ No Gemini API key")
+        return None
+    
     headers = {"Content-Type": "application/json"}
     data = {
         "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {"temperature": 0.8, "maxOutputTokens": 800}
     }
-    response = requests.post(GEMINI_URL, headers=headers, json=data)
-    if response.status_code == 200:
-        result = response.json()
-        return result["candidates"][0]["content"]["parts"][0]["text"]
-    else:
-        print(f"❌ Gemini API error: {response.status_code}")
+    
+    try:
+        response = requests.post(GEMINI_URL, headers=headers, json=data, timeout=30)
+        if response.status_code == 200:
+            result = response.json()
+            return result["candidates"][0]["content"]["parts"][0]["text"]
+        else:
+            print(f"⚠️ Gemini error {response.status_code}")
+            return None
+    except Exception as e:
+        print(f"⚠️ Gemini exception: {e}")
         return None
+
+def call_groq(prompt):
+    """Вызов Groq API (бесплатно, быстро)"""
+    if not GROQ_API_KEY:
+        print("⚠️ No Groq API key")
+        return None
+    
+    headers = {
+        "Authorization": f"Bearer {GROQ_API_KEY}",
+        "Content-Type": "application/json"
+    }
+    data = {
+        "model": "llama-3.3-70b-versatile",
+        "messages": [{"role": "user", "content": prompt}],
+        "temperature": 0.8,
+        "max_tokens": 800
+    }
+    
+    try:
+        response = requests.post(GROQ_URL, headers=headers, json=data, timeout=30)
+        if response.status_code == 200:
+            result = response.json()
+            return result["choices"][0]["message"]["content"]
+        else:
+            print(f"⚠️ Groq error {response.status_code}")
+            return None
+    except Exception as e:
+        print(f"⚠️ Groq exception: {e}")
+        return None
+
+def call_any_api(prompt):
+    """Пытается вызвать Gemini, если не работает — Groq"""
+    print("🔄 Trying Gemini...")
+    result = call_gemini(prompt)
+    if result:
+        print("✅ Gemini succeeded")
+        return result
+    
+    print("🔄 Gemini failed, trying Groq...")
+    result = call_groq(prompt)
+    if result:
+        print("✅ Groq succeeded")
+        return result
+    
+    print("❌ Both APIs failed")
+    return None
 
 def parse_prompts_from_html():
     with open("index.html", "r", encoding="utf-8") as f:
@@ -78,7 +141,6 @@ def save_prompts_to_html(prompts):
     print(f"✅ Saved {len(prompts)} prompts")
 
 def generate_new_prompt():
-    # Случайная категория
     category = random.choice(CATEGORIES)
     subcategory = random.choice(category["sub"])
     topic = random.choice(TOPICS)
@@ -91,20 +153,20 @@ def generate_new_prompt():
 
 Формат (только JSON, без пояснений):
 {{
-  "title": "название (10-60 символов)",
-  "preview": "краткое описание (100-150 символов)",
-  "full": "полная инструкция с [переменными]. Длина 300-600 символов. Используй списки и шаги."
+  "title": "название (10-60 символов, русский)",
+  "preview": "краткое описание (100-150 символов, русский)",
+  "full": "полная инструкция с [переменными]. Длина 300-600 символов. Используй списки и шаги. Русский язык."
 }}
 
 Требования:
 - Промт должен быть практичным и полезным
 - Добавь [переменные в квадратных скобках]
-- Структурируй ответ
-- Язык: русский"""
+- Структурируй ответ (списки, шаги)
+- Не повторяй шаблонные фразы"""
     
     print(f"🎯 Generating: {category['display']} / {SUBCATEGORY_NAMES.get(subcategory, subcategory)} / {topic}")
     
-    response = call_gemini(prompt_text)
+    response = call_any_api(prompt_text)
     if not response:
         return None
     
@@ -127,10 +189,13 @@ def generate_new_prompt():
         }
     except json.JSONDecodeError as e:
         print(f"❌ JSON error: {e}")
+        print(f"Response: {response[:200]}...")
         return None
 
 def main():
     print(f"🚀 Starting auto-generation at {datetime.now()}")
+    print(f"📡 Gemini: {'✅' if GEMINI_API_KEY else '❌'}")
+    print(f"📡 Groq: {'✅' if GROQ_API_KEY else '❌'}")
     
     existing_prompts = parse_prompts_from_html()
     if not existing_prompts:
