@@ -2,494 +2,306 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Генератор промтов для нейросетей | 100+ шаблонов для ChatGPT, Gemini, Claude</title>
-    <meta name="description" content="Бесплатный генератор промтов для AI. Более 100 проверенных шаблонов для ChatGPT, Gemini, Groq и других нейросетей. Копируй и вставляй одним кликом.">
-    <meta name="keywords" content="генератор промтов, промты для нейросети, шаблоны промтов, ChatGPT промты, Gemini промты, как писать промты">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Генератор промтов для нейросетей | 50+ шаблонов для ChatGPT, Gemini, Groq</title>
+    <meta name="description" content="50+ готовых промтов для нейросетей. Бесплатные шаблоны для маркетинга, программирования, бизнеса, перевода, науки и соцсетей. Копируй и вставляй!">
+    <meta name="keywords" content="генератор промтов, промты для нейросети, шаблоны промтов, ChatGPT промты, Gemini промты, Groq промты, как писать промты">
     <meta name="author" content="Cognify AI">
     <meta name="robots" content="index, follow">
     
-    <!-- Open Graph для соцсетей -->
-    <meta property="og:title" content="Генератор промтов для нейросетей">
-    <meta property="og:description" content="100+ готовых шаблонов промтов для ChatGPT, Gemini, Groq и других AI">
+    <meta property="og:title" content="Генератор промтов для нейросетей | 50+ шаблонов">
+    <meta property="og:description" content="Бесплатная библиотека промтов для ChatGPT, Gemini, Groq, Claude">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://prompt-generator.github.io">
+    <meta property="og:url" content="https://cognify-ui.github.io/ai-prompt-generator">
     <meta property="og:image" content="https://cognify-ui.github.io/og-image.png">
     
-    <!-- Canonical ссылка на этот сайт -->
-    <link rel="canonical" href="https://prompt-generator.github.io">
-    
-    <!-- Ссылка на основной сайт (SEO-передача веса) -->
+    <link rel="canonical" href="https://cognify-ui.github.io/ai-prompt-generator">
     <link rel="author" href="https://cognify-ui.github.io">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        /* Header с ссылкой на основной сайт */
-        .header {
-            background: rgba(255,255,255,0.95);
-            border-radius: 20px;
-            padding: 20px 30px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .main-link {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: transform 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .main-link:hover {
-            transform: translateY(-2px);
-        }
-        
-        /* Поиск и фильтры */
-        .search-bar {
-            background: white;
-            border-radius: 50px;
-            padding: 12px 20px;
-            margin-bottom: 30px;
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .search-input {
-            flex: 1;
-            padding: 12px 20px;
-            border: 1px solid #e0e0e0;
-            border-radius: 30px;
-            font-size: 16px;
-            outline: none;
-            transition: all 0.3s;
-        }
-        
-        .search-input:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
-        }
-        
-        .category-filter {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
-        
-        .category-btn {
-            padding: 8px 20px;
-            border: none;
-            border-radius: 30px;
-            background: rgba(255,255,255,0.9);
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 500;
-        }
-        
-        .category-btn.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        
-        /* Сетка промтов */
-        .prompts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-        
-        .prompt-card {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            transition: all 0.3s;
-            cursor: pointer;
-            border: 1px solid #e9ecef;
-        }
-        
-        .prompt-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border-color: #667eea;
-        }
-        
-        .prompt-category {
-            display: inline-block;
-            padding: 4px 12px;
-            background: #f0f0f0;
-            border-radius: 20px;
-            font-size: 12px;
-            margin-bottom: 12px;
-            color: #667eea;
-            font-weight: 600;
-        }
-        
-        .prompt-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: #212529;
-        }
-        
-        .prompt-preview {
-            color: #6c757d;
-            font-size: 14px;
-            line-height: 1.5;
-            margin-bottom: 15px;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        
-        .copy-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: 600;
-            width: 100%;
-            transition: all 0.3s;
-        }
-        
-        .copy-btn:hover {
-            transform: scale(1.02);
-        }
-        
-        /* Модальное окно с полным промтом */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .modal.show {
-            display: flex;
-        }
-        
-        .modal-content {
-            background: white;
-            border-radius: 20px;
-            max-width: 600px;
-            width: 90%;
-            padding: 30px;
-            position: relative;
-        }
-        
-        .modal-content textarea {
-            width: 100%;
-            height: 200px;
-            padding: 15px;
-            border: 1px solid #e0e0e0;
-            border-radius: 12px;
-            font-family: monospace;
-            font-size: 14px;
-            margin: 15px 0;
-            resize: vertical;
-        }
-        
-        .footer {
-            background: rgba(255,255,255,0.9);
-            border-radius: 20px;
-            padding: 30px;
-            margin-top: 40px;
-            text-align: center;
-        }
-        
-        .footer a {
-            color: #667eea;
-            text-decoration: none;
-        }
-        
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #212529;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 30px;
-            z-index: 1100;
-            animation: fadeIn 0.3s;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
-            to { opacity: 1; transform: translateX(-50%) translateY(0); }
-        }
-        
-        @media (max-width: 768px) {
-            .prompts-grid {
-                grid-template-columns: 1fr;
-            }
-            .header {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        .header { background: rgba(255,255,255,0.95); border-radius: 20px; padding: 20px 30px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .logo { font-size: 24px; font-weight: 800; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .main-link { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-weight: 600; transition: transform 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+        .main-link:hover { transform: translateY(-2px); }
+        .stats-bar { background: white; border-radius: 16px; padding: 12px 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .stats-count { font-size: 14px; font-weight: 600; color: #667eea; }
+        .search-bar { background: white; border-radius: 50px; padding: 8px 20px; margin-bottom: 25px; display: flex; gap: 15px; flex-wrap: wrap; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .search-input { flex: 1; padding: 12px 20px; border: 1px solid #e0e0e0; border-radius: 30px; font-size: 16px; outline: none; }
+        .search-input:focus { border-color: #667eea; box-shadow: 0 0 0 3px rgba(102,126,234,0.1); }
+        .category-filter { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 30px; }
+        .category-btn { padding: 8px 20px; border: none; border-radius: 30px; background: rgba(255,255,255,0.9); cursor: pointer; font-weight: 500; transition: all 0.2s; }
+        .category-btn.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .category-btn:hover { transform: translateY(-2px); }
+        .prompts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .prompt-card { background: white; border-radius: 16px; padding: 20px; transition: all 0.3s; cursor: pointer; border: 1px solid #e9ecef; }
+        .prompt-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-color: #667eea; }
+        .prompt-category { display: inline-block; padding: 4px 12px; background: #f0f0f0; border-radius: 20px; font-size: 11px; margin-bottom: 10px; color: #667eea; font-weight: 600; }
+        .prompt-subcategory { display: inline-block; padding: 2px 8px; background: #e9ecef; border-radius: 12px; font-size: 10px; margin-left: 6px; color: #6c757d; }
+        .prompt-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: #212529; line-height: 1.3; }
+        .prompt-preview { color: #6c757d; font-size: 13px; line-height: 1.5; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .copy-btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 8px 16px; border-radius: 30px; cursor: pointer; font-weight: 600; width: 100%; transition: all 0.2s; }
+        .copy-btn:hover { transform: scale(1.02); }
+        .pagination { display: flex; justify-content: center; gap: 8px; margin: 20px 0; flex-wrap: wrap; }
+        .page-btn { padding: 8px 14px; border: 1px solid #ddd; background: white; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+        .page-btn.active { background: #667eea; color: white; border-color: #667eea; }
+        .page-btn:hover { background: #667eea; color: white; }
+        .footer { background: rgba(255,255,255,0.9); border-radius: 20px; padding: 30px; margin-top: 40px; text-align: center; }
+        .footer a { color: #667eea; text-decoration: none; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+        .modal.show { display: flex; }
+        .modal-content { background: white; border-radius: 20px; max-width: 700px; width: 90%; padding: 25px; max-height: 85vh; overflow-y: auto; }
+        .modal-content textarea { width: 100%; height: 200px; padding: 12px; border: 1px solid #ddd; border-radius: 12px; font-family: monospace; font-size: 13px; margin: 15px 0; resize: vertical; }
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #212529; color: white; padding: 10px 20px; border-radius: 30px; z-index: 1100; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+        @media (max-width: 768px) { .prompts-grid { grid-template-columns: 1fr; } .header { flex-direction: column; text-align: center; } }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Шапка с активной ссылкой на основной сайт -->
-        <div class="header">
-            <div class="logo">🎯 Генератор промтов для нейросетей</div>
-            <a href="https://cognify-ui.github.io" class="main-link" target="_blank">
-                🧠 Попробовать Cognify AI бесплатно →
-            </a>
-        </div>
-        
-        <!-- Поиск -->
-        <div class="search-bar">
-            <input type="text" class="search-input" id="searchInput" placeholder="🔍 Поиск промтов... (например, 'код', 'маркетинг', 'перевод')">
-        </div>
-        
-        <!-- Фильтр категорий -->
-        <div class="category-filter" id="categoryFilter"></div>
-        
-        <!-- Сетка промтов -->
-        <div class="prompts-grid" id="promptsGrid"></div>
-        
-        <!-- Блок с пользой для SEO -->
-        <div class="footer">
-            <h3 style="margin-bottom: 15px;">📌 Что такое промты и зачем они нужны?</h3>
-            <p style="max-width: 800px; margin: 0 auto 20px; line-height: 1.6;">
-                Промт (от англ. prompt — подсказка) — это текстовая инструкция для нейросети. 
-                Качественный промт — это 90% успеха в работе с искусственным интеллектом. 
-                Используйте наши готовые шаблоны, чтобы получать лучшие результаты от ChatGPT, 
-                Gemini, Groq и других AI-моделей. Просто скопируйте промт, вставьте в наш 
-                <a href="https://cognify-ui.github.io" style="color:#667eea;">бесплатный AI-чат</a> 
-                и получите идеальный ответ!
-            </p>
-            <p style="font-size: 12px; color: #6c757d;">
-                Более 100 проверенных промтов | Ежедневное обновление | Бесплатно
-            </p>
-        </div>
+<div class="container">
+    <div class="header">
+        <div class="logo">🎯 Генератор промтов для нейросетей</div>
+        <a href="https://cognify-ui.github.io" class="main-link" target="_blank">🧠 Попробовать Cognify AI бесплатно →</a>
     </div>
     
-    <!-- Модальное окно для полного промта -->
-    <div class="modal" id="modal">
-        <div class="modal-content">
-            <h3 id="modalTitle"></h3>
-            <textarea id="modalPrompt" readonly></textarea>
-            <button class="copy-btn" onclick="copyFromModal()">📋 Скопировать промт</button>
-            <button onclick="closeModal()" style="margin-top: 10px; background: #f0f0f0; border: none; padding: 10px; border-radius: 10px; width: 100%; cursor: pointer;">Закрыть</button>
-        </div>
+    <div class="stats-bar">
+        <div class="stats-count">📋 Всего промтов: <span id="totalCount">0</span></div>
+        <div class="stats-count">⭐ Бесплатно | 📋 Копируй | 🚀 Для ChatGPT, Gemini, Groq</div>
     </div>
+    
+    <div class="search-bar">
+        <input type="text" class="search-input" id="searchInput" placeholder="🔍 Поиск промтов... (например, 'Python', 'SMM', 'перевод', 'бизнес')">
+    </div>
+    
+    <div class="category-filter" id="categoryFilter"></div>
+    
+    <div class="prompts-grid" id="promptsGrid"></div>
+    
+    <div class="pagination" id="pagination"></div>
+    
+    <div class="footer">
+        <h3 style="margin-bottom: 15px;">📌 Что такое промты и зачем они нужны?</h3>
+        <p style="max-width: 800px; margin: 0 auto 20px; line-height: 1.6;">
+            Промт (от англ. prompt — подсказка) — это текстовая инструкция для нейросети. 
+            Качественный промт — это 90% успеха в работе с искусственным интеллектом. 
+            Используйте наши готовые шаблоны, чтобы получать лучшие результаты от ChatGPT, 
+            Gemini, Groq и других AI-моделей. Просто скопируйте промт, вставьте в наш 
+            <a href="https://cognify-ui.github.io" style="color:#667eea;">бесплатный AI-чат</a> 
+            и получите идеальный ответ!
+        </p>
+        <p style="font-size: 12px; color: #6c757d;">Более 50 проверенных промтов | Ежедневное обновление | Бесплатно</p>
+    </div>
+</div>
 
-    <script>
-        // БАЗА ПРОМТОВ — 50+ штук для быстрого старта
-        const prompts = [
-            // Копирайтинг и маркетинг
-            { id: 1, title: "Продающий пост для Instagram", category: "marketing", preview: "Напиши продающий пост для Instagram о [продукте]. Используй эмоциональный заголовок, список преимуществ, вопрос к аудитории и призыв к действию...", full: "Напиши продающий пост для Instagram о [название продукта/услуги]. Используй следующую структуру: \n1. Эмоциональный заголовок (5-10 слов)\n2. Крючок в первом предложении\n3. 3-5 преимуществ в виде списка с эмодзи\n4. История или пример использования\n5. Вопрос к аудитории для вовлечения\n6. Призыв к действию\n\nТон: дружелюбный, энергичный. Длина: 150-200 слов." },
-            { id: 2, title: "SEO-статья для блога", category: "marketing", preview: "Напиши SEO-оптимизированную статью на тему [тема]. Используй ключевые слова: [список]. Включи H2 и H3 заголовки, введение, основную часть, вывод...", full: "Напиши SEO-оптимизированную статью на тему: [тема].\n\nКлючевые слова для включения: [вставьте ключевые слова]\n\nТребования:\n- Объём: 1500-2000 слов\n- Введение (100-150 слов)\n- 4-6 подзаголовков H2\n- По 2-3 абзаца под каждым H2\n- Заключение (100-150 слов)\n- Естественное вхождение ключевых слов (2-3% плотность)\n- Список и таблицу в основной части" },
-            { id: 3, title: "Email-рассылка: прогревающая", category: "marketing", preview: "Напиши прогревающую email-рассылку для новой подписки. Серия из 5 писем: приветственное, полезность, социальное доказательство, оффер, напоминание...", full: "Создай серию из 5 прогревающих писем для новой подписки.\n\nТема продукта: [опишите продукт]\n\nПисьмо 1 (Приветственное): знакомство с брендом, обещание ценности\nПисьмо 2 (Полезность): ценный совет/инструмент/кейс\nПисьмо 3 (Социальное доказательство): отзывы, кейсы, статистика\nПисьмо 4 (Оффер): презентация продукта, бонусы\nПисьмо 5 (Напоминание): urgency + последний шанс\n\nКаждое письмо: тема (до 50 символов), приветствие, основная часть (200-300 слов), P.S., подпись." },
-            
-            // Программирование
-            { id: 4, title: "Функция на Python", category: "coding", preview: "Напиши функцию на Python, которая [описание задачи]. Включи docstring, type hints, обработку ошибок и пример использования...", full: "Напиши функцию на Python, которая [опишите задачу].\n\nТребования:\n- Название функции на английском, отражающее суть\n- Type hints для всех аргументов и возвращаемого значения\n- Docstring в формате Google или NumPy\n- Обработка возможных исключений (try/except)\n- Пример использования в комментарии\n- Сложность не более O(n log n)\n- Тестовый пример в конце" },
-            { id: 5, title: "Рефакторинг кода", category: "coding", preview: "Проведи рефакторинг следующего кода: [код]. Улучши читаемость, производительность и следуй принципам SOLID...", full: "Проведи рефакторинг следующего кода:\n```\n[вставьте код]\n```\n\nКритерии рефакторинга:\n1. Улучши читаемость (понятные имена переменных, разбивка на функции)\n2. Следуй принципам SOLID\n3. Удали дублирование (DRY)\n4. Добавь обработку ошибок\n5. Улучши производительность (если возможно)\n6. Добавь комментарии для сложных мест\n7. Сохрани исходную функциональность\n\nВыдай результат в формате: \"Исходный код\" -> \"Рефакторированный код\" -> \"Список изменений\"." },
-            { id: 6, title: "Объяснение алгоритма", category: "coding", preview: "Объясни алгоритм [название] простыми словами. Включи: что решает, как работает (пошагово), сложность, пример на Python...", full: "Объясни алгоритм [название алгоритма] максимально понятно.\n\nСтруктура ответа:\n1. Что решает алгоритм? (простые слова, 2-3 предложения)\n2. Как работает? (пошагово, без формул)\n3. Визуализация или аналогия из жизни\n4. Сложность: время и память (Big O)\n5. Реализация на Python (с комментариями)\n6. Когда использовать, а когда нет\n7. Пример входных и выходных данных" },
-            { id: 7, title: "Code Review", category: "coding", preview: "Проведи code review: [код]. Оцени: стиль, потенциальные баги, производительность, безопасность, дай рекомендации...", full: "Проведи code review следующего кода:\n```\n[вставьте код]\n```\n\nОцени по критериям (от 1 до 5):\n- Читаемость и стиль\n- Потенциальные баги\n- Производительность\n- Безопасность\n- Масштабируемость\n\nДля каждого недостатка предложи исправление.\n\nИтог: вердикт (принять с доработками/отклонить) + топ-3 рекомендации." },
-            
-            // Бизнес и стартапы
-            { id: 8, title: "Бизнес-идея генератор", category: "business", preview: "Сгенерируй 10 бизнес-идей в сфере [ниша]. Для каждой: название, проблема, решение, целевая аудитория, модель монетизации...", full: "Сгенерируй 10 бизнес-идей в сфере [ниша/отрасль].\n\nДля каждой идеи опиши:\n1. Название проекта (креативное)\n2. Какую проблему решает (1 предложение)\n3. Решение (2-3 предложения)\n4. Целевая аудитория (кто будет платить)\n5. Модель монетизации\n6. Примерный рынок (маленький/средний/большой)\n7. Сложность запуска (низкая/средняя/высокая)\n\nВ конце выдели топ-3 самые перспективные с обоснованием." },
-            { id: 9, title: "MVP план", category: "business", preview: "Составь план MVP для продукта [описание]. Включи: основные фичи, этапы разработки, метрики успеха, бюджет (оценка)...", full: "Составь план MVP (Minimum Viable Product) для продукта:\n[опишите идею продукта]\n\nПлан должен включать:\n1. Основные фичи MVP (только must-have, без nice-to-have)\n2. Этапы разработки с сроками (недели)\n3. Необходимые ресурсы (люди, софт)\n4. Метрики успеха (KPI)\n5. Бюджет (примерная оценка)\n6. Риски и их митигация\n7. Что после MVP? (следующие 3 фичи)\n\nФормат: таблица или чек-лист." },
-            { id: 10, title: "Питч-дек шаблон", category: "business", preview: "Создай структуру питч-дека для стартапа. 10 слайдов: проблема, решение, рынок, продукт, тракция, команда, финансы, инвестиции...", full: "Создай структуру питч-дека для стартапа (10 слайдов).\n\nСлайд 1: Титул (название, логотип, теглайн)\nСлайд 2: Проблема (что болит у клиента, цифры)\nСлайд 3: Решение (как мы это лечим, уникальность)\nСлайд 4: Рынок (TAM/SAM/SOM, тренды)\nСлайд 5: Продукт (демо, скриншоты, ключевые фичи)\nСлайд 6: Тракция (доход, пользователи, партнёры)\nСлайд 7: Бизнес-модель (как зарабатываем)\nСлайд 8: Команда (почему мы справимся)\nСлайд 9: Финансы (прогноз, юнит-экономика)\nСлайд 10: Запрос инвестиций (сколько и на что)\n\nДля каждого слайда напиши ключевые тезисы (3-5 пунктов)." },
-            
-            // Перевод и локализация
-            { id: 11, title: "Адаптивный перевод", category: "translate", preview: "Переведи текст на [язык] с адаптацией под культуру: [текст]. Сохрани tone of voice, эмоции и игра слов, если возможно...", full: "Переведи следующий текст на [целевой язык] с адаптацией под культуру:\n\n```\n[текст для перевода]\n```\n\nТребования:\n- Сохрани tone of voice (формальный/неформальный/дружелюбный)\n- Адаптируй культурные отсылки и юмор\n- Игра слов: сохрани смысл, даже если меняешь форму\n- Термины: проверь, что есть устоявшиеся аналоги\n- Форматирование: сохрани абзацы и списки\n- Длина: примерно тот же объём\n\nВыдай: \"Перевод:\" + сам перевод + \"Примечания переводчика\" (где отошёл от оригинала и почему)." },
-            { id: 12, title: "Локализация интерфейса", category: "translate", preview: "Переведи UI строки для приложения: [список фраз]. Адаптируй под [язык/регион], учитывая длину строк (кнопки, меню)...", full: "Переведи следующие UI строки для приложения на [язык и регион, например, русский (Россия)]:\n\n```\n[список фраз через запятую или построчно]\n```\n\nТребования:\n- Учитывай ограничения по длине (кнопки: максимум 20 символов)\n- Для глаголов используй инфинитив (в меню) или повелительное наклонение (в кнопках)\n- Единицы измерения и даты — местный формат\n- Проверь на гендерную нейтральность, если нужно\n- Предложи альтернативы для спорных мест\n\nВыдай в формате: \"Оригинал -> Перевод (пояснение, если нужно)\"." },
-            
-            // Наука и образование
-            { id: 13, title: "Объясни сложную тему", category: "science", preview: "Объясни [тема] как 5-летнему. Используй аналогии, метафоры, избегай сложных терминов. В конце — простая схема...", full: "Объясни тему [сложная тема] так, чтобы понял 5-летний ребёнок.\n\nПравила:\n- Никаких специальных терминов без объяснения\n- Используй аналогии из повседневной жизни (еда, игрушки, мультики)\n- Разбей на микро-шаги (максимум 7)\n- Добавь визуальную схему словами (что с чем связано)\n- В конце: однопредложное резюме\n- Пример: \"Это как ... потому что ...\"\n\nФормат: дружелюбный диалог с воображаемым ребёнком." },
-            { id: 14, title: "Учебный план", category: "science", preview: "Составь учебный план по [тема] для начинающего. Разбей на недели: теория, практика, проекты, ресурсы (книги, видео)...", full: "Составь учебный план по теме [тема] для полного новичка.\n\nДлительность: [кол-во недель, например, 8]\nФормат: самостоятельное изучение, 10-15 часов в неделю\n\nСтруктура по неделям:\n- Неделя X: тема\n  - Теория (что прочитать, основные концепции)\n  - Практика (конкретные упражнения)\n  - Проект (что сделать для закрепления)\n  - Ресурсы (ссылки на книги, видео, курсы)\n\nВ конце:\n- Финальный проект (комплексный)\n- Как проверить свои знания (тест/челлендж)\n- Следующие шаги после плана" },
-            
-            // Соцсети и блогинг
-            { id: 15, title: "Вирусный TikTok сценарий", category: "social", preview: "Напиши сценарий для TikTok (15-30 сек): хук, основной контент, призыв. Тема: [тема]. Формат: текст + визуальные эффекты...", full: "Напиши вирусный сценарий для TikTok.\n\nТема: [тема видео]\nДлительность: 15-30 секунд\n\nСтруктура:\n0-3 сек: ХУК (зацепка, интрига, вопрос) — текст на экране + удивлённое лицо\n3-20 сек: ОСНОВНАЯ ЧАСТЬ (полезный контент, лайфхак, история) — быстрый монтаж, смена кадров каждые 2-3 сек\n20-25 сек: ПРИЗЫВ (подпишись, перешли, напиши в комментариях что-то)\n25-30 сек: ПОВТОР ХУКА или неожиданная концовка\n\nДобавь:\n- Какие звуковые дорожки использовать (трендовые)\n- Визуальные эффекты (зеленый экран, split screen)\n- Текст на экране (тайминг)\n- Хэштеги (5-7 штук)" },
-            
-            // Добавляю ещё 30+ промтов сокращённо для экономии места, но в реальном коде их будет 50+
-            { id: 16, title: "Резюме под вакансию", category: "business", preview: "Адаптируй моё резюме под вакансию [ссылка]. Подсвети ключевые навыки, достижения в цифрах, убери лишнее...", full: "Адаптируй моё резюме под конкретную вакансию.\n\nМоё резюме:\n```\n[вставьте текст резюме]\n```\n\nВакансия: [ссылка на вакансию или описание]\n\nЧто сделать:\n1. Выдели 3-5 ключевых навыков из вакансии и покажи их в опыте\n2. Переформулируй достижения в цифрах (на сколько % выросло, сколько сэкономил)\n3. Удали нерелевантный опыт (оставь только важное)\n4. Добавь keywords из описания вакансии\n5. Сопроводительное письмо (3-4 предложения) под эту вакансию\n\nВыдай: готовое резюме + сопроводительное письмо." },
-            { id: 17, title: "Техническое задание (ТЗ)", category: "coding", preview: "Составь ТЗ для [тип проекта]. Включи: цель, требования (функциональные/нефункциональные), этапы, критерии приёмки...", full: "Составь техническое задание для [тип проекта, например, мобильное приложение/лендинг/чат-бот].\n\nРазделы:\n1. Цель и описание проекта (2-3 предложения)\n2. Функциональные требования (что система ДОЛЖНА делать, по пунктам)\n3. Нефункциональные требования (скорость, безопасность, масштабируемость)\n4. Этапы разработки с сроками\n5. Технологический стек (рекомендации)\n6. Критерии приёмки (как поймём, что готово)\n7. Риски и предположения\n\nВыдай готовый шаблон с примерами." },
-            { id: 18, title: "Сторителлинг для бренда", category: "marketing", preview: "Создай историю бренда: проблема героя, встреча с решением, трансформация. Тон: [эмоциональный/экспертный/дружеский]...", full: "Создай историю бренда по схеме \"Путь героя\".\n\nБренд: [название и чем занимается]\nЦА: [кто ваши клиенты]\nТон: [эмоциональный/экспертный/дерзкий/дружеский]\n\nСтруктура:\n1. Обычный мир (как жил герой до проблемы)\n2. Проблема (что пошло не так, боль)\n3. Встреча с наставником/решением (как узнал о бренде)\n4. Преодоление (как использовал продукт, сомнения)\n5. Трансформация (как изменилась жизнь)\n6. Призыв к действию (стать следующим героем)\n\nДлина: 500-700 слов. Закончи моралью/уроком." }
-        ];
-        
-        // Добавляем недостающие ID
-        for (let i = 19; i <= 50; i++) {
-            if (!prompts.find(p => p.id === i)) {
-                prompts.push({
-                    id: i,
-                    title: `Промт #${i} (добавьте свой)`,
-                    category: ["marketing", "coding", "business", "translate", "science", "social"][i % 6],
-                    preview: "Напиши свой уникальный промт и поделись с сообществом!",
-                    full: "Здесь будет ваш промт. Отредактируйте этот файл и добавьте свой шаблон."
-                });
-            }
-        }
-        
-        // Уникальные категории
-        const categories = [...new Set(prompts.map(p => p.category))];
-        const categoryNames = {
-            marketing: "📢 Маркетинг и копирайтинг",
-            coding: "💻 Программирование",
-            business: "💼 Бизнес и стартапы",
-            translate: "🌐 Перевод и локализация",
-            science: "🔬 Наука и образование",
-            social: "📱 Соцсети и блогинг"
-        };
-        
-        let currentCategory = "all";
-        let searchTerm = "";
-        
-        function renderCategories() {
-            const filterDiv = document.getElementById("categoryFilter");
-            filterDiv.innerHTML = `<button class="category-btn ${currentCategory === "all" ? "active" : ""}" data-category="all">📋 Все (${prompts.length})</button>`;
-            
-            for (let cat of categories) {
-                const count = prompts.filter(p => p.category === cat).length;
-                filterDiv.innerHTML += `<button class="category-btn ${currentCategory === cat ? "active" : ""}" data-category="${cat}">${categoryNames[cat] || cat} (${count})</button>`;
-            }
-            
-            document.querySelectorAll(".category-btn").forEach(btn => {
-                btn.addEventListener("click", () => {
-                    currentCategory = btn.dataset.category;
-                    renderCategories();
-                    renderPrompts();
-                });
-            });
-        }
-        
-        function renderPrompts() {
-            const grid = document.getElementById("promptsGrid");
-            let filtered = prompts;
-            
-            if (currentCategory !== "all") {
-                filtered = filtered.filter(p => p.category === currentCategory);
-            }
-            
-            if (searchTerm) {
-                filtered = filtered.filter(p => 
-                    p.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                    p.preview.toLowerCase().includes(searchTerm.toLowerCase())
-                );
-            }
-            
-            if (filtered.length === 0) {
-                grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:40px;">😕 Ничего не найдено. Попробуйте другой поиск.</div>';
-                return;
-            }
-            
-            grid.innerHTML = filtered.map(prompt => `
-                <div class="prompt-card" onclick="showPrompt(${prompt.id})">
-                    <div class="prompt-category">${categoryNames[prompt.category] || prompt.category}</div>
-                    <div class="prompt-title">${escapeHtml(prompt.title)}</div>
-                    <div class="prompt-preview">${escapeHtml(prompt.preview)}</div>
-                    <button class="copy-btn" onclick="event.stopPropagation(); copyPrompt(${prompt.id})">📋 Скопировать промт</button>
-                </div>
-            `).join("");
-        }
-        
-        function escapeHtml(text) {
-            const div = document.createElement("div");
-            div.textContent = text;
-            return div.innerHTML;
-        }
-        
-        function showPrompt(id) {
-            const prompt = prompts.find(p => p.id === id);
-            if (!prompt) return;
-            document.getElementById("modalTitle").innerText = prompt.title;
-            document.getElementById("modalPrompt").value = prompt.full;
-            document.getElementById("modal").classList.add("show");
-        }
-        
-        function copyPrompt(id) {
-            const prompt = prompts.find(p => p.id === id);
-            if (!prompt) return;
-            navigator.clipboard.writeText(prompt.full);
-            showToast("✅ Промт скопирован! Вставьте в Cognify AI");
-        }
-        
-        function copyFromModal() {
-            const text = document.getElementById("modalPrompt").value;
-            navigator.clipboard.writeText(text);
-            showToast("✅ Промт скопирован!");
-        }
-        
-        function closeModal() {
-            document.getElementById("modal").classList.remove("show");
-        }
-        
-        function showToast(msg) {
-            const toast = document.createElement("div");
-            toast.className = "toast";
-            toast.innerText = msg;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 2500);
-        }
-        
-        // Поиск
-        document.getElementById("searchInput").addEventListener("input", (e) => {
-            searchTerm = e.target.value;
+<div class="modal" id="modal">
+    <div class="modal-content">
+        <h3 id="modalTitle"></h3>
+        <textarea id="modalPrompt" readonly></textarea>
+        <button class="copy-btn" onclick="copyFromModal()">📋 Скопировать промт</button>
+        <button onclick="closeModal()" style="margin-top: 10px; background: #f0f0f0; border: none; padding: 10px; border-radius: 10px; width: 100%; cursor: pointer;">Закрыть</button>
+    </div>
+</div>
+
+<script>
+// ========== 50+ УНИКАЛЬНЫХ ПРОМТОВ ==========
+const prompts = [
+    // === МАРКЕТИНГ (12) ===
+    { id: 1, category: "marketing", subcategory: "smm", title: "Продающий пост для Instagram", preview: "Напиши продающий пост для Instagram о [продукте]. Эмоциональный заголовок, список преимуществ, вопрос к аудитории и призыв.", full: "Напиши продающий пост для Instagram о [название продукта].\n\nСтруктура:\n1. Заголовок: эмоциональный, интригующий (5-10 слов)\n2. Первое предложение: крючок\n3. 3-5 преимуществ списком с эмодзи\n4. Социальное доказательство (отзыв или статистика)\n5. Вопрос к аудитории\n6. Призыв к действию\n\nТон: дружелюбный. Длина: 150-200 слов. Добавь 5 хэштегов." },
+    { id: 2, category: "marketing", subcategory: "seo", title: "SEO-статья для блога", preview: "Напиши SEO-статью на тему [тема] с ключевыми словами [список]. H2/H3 заголовки, введение, основная часть, вывод.", full: "Напиши SEO-статью на тему: [тема].\nКлючевые слова: [список]\n\nТребования:\n- Объём: 1500-2000 слов\n- Введение (100-150 слов) с ключевым словом\n- 4-6 подзаголовков H2\n- По 2-3 абзаца под каждым H2\n- Заключение (100-150 слов)\n- Плотность ключевых слов 2-3%\n- Список и таблица в основной части" },
+    { id: 3, category: "marketing", subcategory: "email", title: "Прогревающая email-рассылка", preview: "Создай серию из 5 прогревающих писем: приветственное, полезность, соцдок, оффер, напоминание.", full: "Создай серию из 5 прогревающих писем.\nТема продукта: [опишите]\n\nПисьмо 1: Приветственное — знакомство, обещание ценности\nПисьмо 2: Полезность — ценный совет или инструмент\nПисьмо 3: Соцдоказательство — отзывы, кейсы, статистика\nПисьмо 4: Оффер — презентация продукта, бонусы\nПисьмо 5: Напоминание — urgency + последний шанс\n\nКаждое письмо: тема (до 50 символов), приветствие, основная часть (200-300 слов), P.S., подпись." },
+    { id: 4, category: "marketing", subcategory: "copywriting", title: "10 заголовков для статьи", preview: "Сгенерируй 10 заголовков для статьи на тему [тема]. Разные форматы: вопросный, список, how-to, провокационный.", full: "Сгенерируй 10 заголовков для статьи на тему: [тема].\n\nФорматы:\n1. Вопросный\n2. Список (5 способов...)\n3. How-to (Как... за 10 минут)\n4. Провокационный\n5. SEO-заголовок с ключевым словом\n6. Эмоциональный\n7. С цифрой\n8. Обещающий\n9. Короткий (до 70 символов)\n10. Длинный (10-14 слов)\n\nДля каждого укажи, для какого канала подходит." },
+    { id: 5, category: "marketing", subcategory: "ads", title: "Текст для Яндекс.Директ", preview: "Напиши 5 вариантов объявлений для Яндекс.Директ: заголовок (до 35), текст (до 81), быстрые ссылки.", full: "Напиши 5 вариантов объявлений для Яндекс.Директ.\nТема: [опишите]\nКлючевые запросы: [список]\n\nДля каждого варианта:\n- Заголовок (до 35 символов, с ключевым словом)\n- Текст (до 81 символа, преимущество + призыв)\n- Отображаемая ссылка\n- 2 быстрые ссылки (по 25 символов)\n- Уточнение (до 35 символов)\n\nДобавь минус-слова (5-10) и рекомендацию по ставке." },
+    { id: 6, category: "marketing", subcategory: "branding", title: "Тон голоса бренда (Tone of Voice)", preview: "Опиши Tone of Voice для бренда [название]. Характеристики: формальность, юмор, эмоции, лексика.", full: "Опиши Tone of Voice для бренда [название].\nНиша: [опишите]\nЦА: [опишите]\n\nПараметры:\n1. Формальность (1-10): [от неформального до строгого]\n2. Юмор (1-10): [от отсутствия до сарказма/иронии]\n3. Эмоциональность (1-10): [от фактов до эмоций]\n4. Лексика: [профессиональная/разговорная/сленг]\n5. Примеры фраз для разных ситуаций:\n   - Приветствие\n   - Ответ на возражение\n   - Призыв к действию\n   - Прощание\n\nДобавь 3-5 запрещённых фраз или слов." },
+    { id: 7, category: "marketing", subcategory: "smm", title: "Пост для Telegram-канала", preview: "Напиши пост для Telegram-канала (300-500 символов) с эмодзи, вопросом и призывом.", full: "Напиши пост для Telegram-канала на тему: [тема].\n\nТребования:\n- Длина: 300-500 символов\n- Первое предложение: цепляет\n- 3-5 эмодзи\n- 2-3 коротких абзаца\n- Вопрос к аудитории\n- Призыв (написать в комментариях, поставить реакцию)\n- Если есть ссылка — через кнопку «Читать далее»\n- 3-5 хэштега" },
+    { id: 8, category: "marketing", subcategory: "seo", title: "Мета-теги для страницы", preview: "Создай title (50-60 символов) и description (150-160) для страницы на тему [тема] с ключевыми словами [список].", full: "Создай мета-теги для страницы.\nТема: [тема]\nКлючевые слова: [список]\n\nTitle (50-60 символов):\n- С ключевым словом в начале\n- Привлекающий клик\n- 2 варианта\n\nDescription (150-160 символов):\n- С ключевыми словами\n- Объясняет, что найдёт пользователь\n- Призыв к действию\n- 2 варианта\n\nKeywords (5-10 слов):\n- Основные и второстепенные\n- Словосочетания\n\nДобавь рекомендацию по H1." },
+    { id: 9, category: "marketing", subcategory: "email", title: "Письмо с бонусом для клиента", preview: "Напиши email с бонусом для клиентов: персонализация, описание бонуса, срок действия, призыв.", full: "Напиши email с бонусом для клиентов.\nТема: [оффер]\nБонус: [что даёте]\nСрок: [до какого числа]\n\nСтруктура:\n1. Тема: срочность + выгода (до 50 символов)\n2. Приветствие: [Имя]\n3. Проблема или контекст (1-2 предложения)\n4. Бонус: что именно, почему ценен\n5. Срок действия: конкретная дата или счётчик\n6. Призыв: кнопка с действием\n7. P.S.: напоминание о выгоде\n\nТон: дружелюбный, без агрессивного маркетинга." },
+    { id: 10, category: "marketing", subcategory: "copywriting", title: "Сторителлинг для бренда", preview: "Создай историю бренда по схеме «Путь героя»: проблема, встреча с решением, трансформация.", full: "Создай историю бренда по схеме «Путь героя».\nБренд: [название и чем занимается]\nЦА: [кто клиенты]\nТон: [эмоциональный/экспертный/дружеский]\n\nСтруктура:\n1. Обычный мир (как жил герой до проблемы)\n2. Проблема (что пошло не так)\n3. Встреча с решением (как узнал о бренде)\n4. Преодоление (как использовал продукт)\n5. Трансформация (как изменилась жизнь)\n6. Призыв к действию\n\nДлина: 500-700 слов. Закончи моралью." },
+    { id: 11, category: "marketing", subcategory: "analytics", title: "Настройка целей в GA4", preview: "Опиши, как настроить цели в Google Analytics 4 для [тип сайта]. Пошаговая инструкция.", full: "Опиши настройку целей в Google Analytics 4.\nТип сайта: [интернет-магазин/лендинг/блог]\nБизнес-цели: [продажи/лиды/вовлечение]\n\nШаги:\n1. Какие события нужно отслеживать:\n   - Для продаж: begin_checkout, purchase\n   - Для лидов: generate_lead, submit_form\n   - Для вовлечения: scroll, view_promotion\n2. Как настроить события через GTM или напрямую\n3. Как отметить событие как конверсию\n4. Как создать аудиторию на основе цели\n5. Как связать с Google Ads\n\nПример кода для отслеживания (JavaScript)." },
+    { id: 12, category: "marketing", subcategory: "ads", title: "Реклама в VK Рекламе", preview: "Создай 3 варианта объявлений для VK Рекламы: текст, заголовок, изображение, призыв.", full: "Создай 3 варианта объявлений для VK Рекламы.\nПродукт: [опишите]\nЦА: [пол, возраст, интересы]\nБюджет: [в день]\n\nДля каждого варианта:\n- Заголовок (до 35 символов)\n- Текст (до 220 символов, проблема + решение)\n- Описание к ссылке (до 80 символов)\n- Кнопка: «Подробнее» / «Записаться» / «Купить»\n- Рекомендации по изображению (цвета, эмоции, текст)\n\nДобавь минус-слова и рекомендацию по ставке." },
+    
+    // === ПРОГРАММИРОВАНИЕ (10) ===
+    { id: 13, category: "coding", subcategory: "python", title: "Функция на Python", preview: "Напиши функцию на Python для [задача]. Type hints, docstring, обработка ошибок, пример использования.", full: "Напиши функцию на Python для: [опишите задачу].\n\nТребования:\n- Название на английском, отражающее суть\n- Type hints для аргументов и возврата\n- Docstring в формате Google или NumPy\n- Try/except для возможных ошибок\n- Пример использования в комментарии\n- Сложность не более O(n log n)\n- Тестовый пример в конце\n\nДобавь аннотацию @dataclass, если нужна структура." },
+    { id: 14, category: "coding", subcategory: "javascript", title: "Асинхронная функция в JS", preview: "Напиши async/await функцию на JavaScript для [задача]. Обработка ошибок, таймауты, retry.", full: "Напиши async/await функцию на JavaScript для: [опишите задачу, например, API запрос, загрузка файлов].\n\nТребования:\n- Async/await синтаксис\n- Try/catch для ошибок\n- Таймаут (Promise.race)\n- Retry с exponential backoff (до 3 попыток)\n- AbortController для отмены\n- JSDoc комментарии\n\nПример использования с Promise.all для параллельных запросов." },
+    { id: 15, category: "coding", subcategory: "sql", title: "Сложный SQL запрос", preview: "Напиши SQL запрос, который [описание]. JOIN, GROUP BY, подзапросы, оконные функции.", full: "Напиши SQL запрос для задачи: [опишите, какие данные нужны]\n\nСтруктура БД:\n[опишите таблицы и колонки]\n\nТребования:\n- INNER/LEFT JOIN где нужно\n- WHERE фильтры\n- GROUP BY с агрегацией (COUNT, SUM, AVG)\n- HAVING для фильтрации групп\n- Подзапрос или CTE (WITH)\n- Оконная функция (ROW_NUMBER, RANK, LAG)\n- ORDER BY и LIMIT\n\nДобавь комментарии к каждому шагу и пример результата." },
+    { id: 16, category: "coding", subcategory: "algorithms", title: "Объяснение алгоритма", preview: "Объясни алгоритм [название] простыми словами: что решает, как работает, сложность, пример.", full: "Объясни алгоритм [название] максимально понятно.\n\nСтруктура:\n1. Что решает? (простые слова, 2-3 предложения)\n2. Как работает? (пошагово, без формул)\n3. Аналогия из жизни\n4. Сложность: время и память (Big O)\n5. Реализация на Python (с комментариями)\n6. Когда использовать, а когда нет\n7. Пример входных и выходных данных\n\nДля визуализации — диаграмма словами." },
+    { id: 17, category: "coding", subcategory: "devops", title: "Dockerfile для проекта", preview: "Создай Dockerfile для [тип проекта]. Многостадийная сборка, оптимизация слоёв, .dockerignore.", full: "Создай Dockerfile для проекта: [тип: Node.js/Python/Go/Java].\n\nТребования:\n- Базовый образ (alpine для минимального размера)\n- Многостадийная сборка (build + runtime)\n- Копирование зависимостей отдельно от кода\n- Не root пользователь\n- HEALTHCHECK инструкция\n- LABEL с версией и автором\n- Аргументы сборки (ARG) для окружений\n\nДобавь:\n- .dockerignore файл\n- Команды для сборки и запуска\n- Оптимизация: объединение RUN, удаление кэша" },
+    { id: 18, category: "coding", subcategory: "testing", title: "Unit-тесты для функции", preview: "Напиши unit-тесты для [функция] на pytest. Краевые случаи, моки, фикстуры.", full: "Напиши unit-тесты для функции: [опишите функцию]\n\nТребования:\n- Фреймворк: pytest\n- Тест на нормальное поведение\n- Тест на краевые случаи (границы, null, пустые значения)\n- Тест на исключения (pytest.raises)\n- Моки для внешних зависимостей (pytest-mock)\n- Фикстуры для повторяющихся данных\n- Параметризация (@pytest.mark.parametrize)\n- Покрытие не менее 80%\n\nПример отчёта о покрытии (pytest-cov)." },
+    { id: 19, category: "coding", subcategory: "frontend", title: "React-компонент", preview: "Создай React-компонент на TypeScript для [задача]. Props, состояние, хуки, стили.", full: "Создай React-компонент на TypeScript для: [опишите задачу].\n\nТребования:\n- TypeScript с интерфейсом Props\n- Функциональный компонент\n- Хуки: useState, useEffect, useCallback\n- Обработка загрузки (loading) и ошибок (error)\n- CSS Modules или styled-components\n- PropTypes или типы\n- Мемоизация (React.memo, useMemo)\n- Пример использования с пояснениями\n\nДобавь тест на React Testing Library." },
+    { id: 20, category: "coding", subcategory: "backend", title: "REST API эндпоинт", preview: "Создай REST API эндпоинт на [фреймворк] для [ресурс]. Валидация, авторизация, пагинация.", full: "Создай REST API эндпоинт для [ресурс] на [FastAPI/Express/Django].\n\nТребования:\n- Метод: GET/POST/PUT/DELETE\n- Валидация входных данных (Pydantic/Joi/serializers)\n- Авторизация: JWT или API Key\n- Пагинация (limit/offset или cursor)\n- Фильтрация и сортировка\n- Коды ответов (200, 201, 400, 401, 404)\n- Логирование запросов\n- Swagger/OpenAPI документация\n\nПример curl запроса и ответа." },
+    
+    // === БИЗНЕС (8) ===
+    { id: 21, category: "business", subcategory: "startup", title: "Проверка гипотезы через MVP", preview: "Опиши план проверки бизнес-гипотезы через MVP за 7 дней. Минимальный бюджет.", full: "Разработай план проверки гипотезы через MVP за 7 дней.\nГипотеза: [опишите]\nЦА: [опишите]\n\nДень 1-2: 5 интервью с клиентами\nДень 3-4: Создание MVP (лендинг / форма сбора email / прототип)\nДень 5-6: Запуск + сбор данных (CTR, конверсия)\nДень 7: Анализ → решение: pivot / persevere / kill\n\nБюджет: 0-3000₽. Каналы трафика: соцсети, чаты (бесплатно)." },
+    { id: 22, category: "business", subcategory: "finance", title: "Финансовая модель стартапа", preview: "Создай финансовую модель для стартапа: юнит-экономика, прогноз на 12 месяцев, точка безубыточности.", full: "Создай финансовую модель для стартапа.\nПродукт: [опишите]\nЦена: [стоимость]\nСебестоимость: [переменные расходы]\n\nВключи:\n1. Юнит-экономику:\n   - CAC (цена привлечения клиента)\n   - LTV (жизненная ценность клиента)\n   - Маржинальность\n2. Прогноз на 12 месяцев:\n   - Месячная выручка\n   - Постоянные расходы\n   - Чистая прибыль\n3. Точка безубыточности (в деньгах и клиентах)\n4. Потребность в инвестициях\n\nФормат: таблица с формулами." },
+    { id: 23, category: "business", subcategory: "sales", title: "Скрипт продаж по BANT", preview: "Напиши скрипт продаж по методологии BANT: бюджет, полномочия, потребности, сроки.", full: "Напиши скрипт продаж по BANT.\nПродукт: [опишите]\nЦена: [диапазон]\nКто принимает решение: [роль]\n\nСтруктура разговора:\n1. Открытие: представление, цель звонка\n2. B — Бюджет: «Какой бюджет заложен на решение этой задачи?»\n3. A — Полномочия: «Кто принимает финальное решение?»\n4. N — Потребности: «Какая проблема у вас сейчас?», «Что пробовали?»\n5. T — Сроки: «Когда планируете внедрить решение?»\n6. Презентация: подстройка под потребности\n7. Работа с возражениями: 3 самых частых возражения и ответы\n8. Закрытие: назначение следующего шага\n\nДобавь фразы-помощники для каждого этапа." },
+    { id: 24, category: "business", subcategory: "management", title: "Метрики для команды (KPIs)", preview: "Разработай KPI для команды [отдел]. По SMART, с весами и формулами расчёта.", full: "Разработай KPI для команды [отдел: маркетинг/продажи/разработка/поддержка].\nЦель компании на квартал: [опишите]\n\nДля каждой роли:\n1. Название метрики\n2. Формула расчёта\n3. План (целевое значение)\n4. Факт (как замеряем)\n5. Вес метрики (%)\n6. Источник данных\n7. Частота замера (ежедневно/еженедельно)\n\nПример для маркетолога:\n- ROMI: (Выручка - Расходы) / Расходы * 100%, план 300%, вес 50%\n- CPL: Бюджет / Лиды, план < 500₽, вес 30%\n\nДобавь правило расчёта итоговой премии." },
+    { id: 25, category: "business", subcategory: "strategy", title: "SWOT-анализ", preview: "Проведи SWOT-анализ для [компания/продукт]. Сильные/слабые стороны, возможности, угрозы.", full: "Проведи SWOT-анализ для [компания/продукт].\nКонкуренты: [перечислите]\n\nМатрица:\n1. Strengths (Сильные стороны):\n   - Что у нас получается лучше конкурентов?\n   - Уникальные ресурсы, экспертиза\n2. Weaknesses (Слабые стороны):\n   - Чего нам не хватает?\n   - Где мы проигрываем?\n3. Opportunities (Возможности):\n   - Тренды, ниши, технологии\n   - Что можно использовать?\n4. Threats (Угрозы):\n   - Действия конкурентов\n   - Рыночные риски\n\nДля каждой ячейки — 5-7 пунктов. В конце: стратегия на основе SO (использовать силы для возможностей)." },
+    { id: 26, category: "business", subcategory: "hr", title: "Описание вакансии", preview: "Составь описание вакансии для [роль]. Обязанности, требования, условия, как у нас.", full: "Составь описание вакансии.\nРоль: [название должности]\nОтдел: [маркетинг/разработка/продажи]\n\nСтруктура:\n1. Кто мы (2-3 предложения о компании)\n2. Чем предстоит заниматься (5-7 пунктов)\n3. Наши ожидания (must have + nice to have)\n4. Условия работы:\n   - Зарплатная вилка\n   - График, формат (офис/гибрид/удалёнка)\n   - Оборудование\n   - Бонусы (ДМС, обучение, питание)\n5. Как к нам попасть: этапы отбора\n6. Почему у нас круто работать\n\nТон: дружелюбный, честный. Избегай клише «стрессоустойчивость», «коммуникабельность» без контекста." },
+    { id: 27, category: "business", subcategory: "startup", title: "Питч-дек для инвестора", preview: "Создай структуру питч-дека для стартапа: проблема, решение, рынок, продукт, тракция, команда, финансы.", full: "Создай структуру питч-дека (10 слайдов).\n\nСлайд 1: Титул (название, логотип, теглайн)\nСлайд 2: Проблема (что болит у клиента, цифры)\nСлайд 3: Решение (как лечим, уникальность)\nСлайд 4: Рынок (TAM/SAM/SOM, тренды)\nСлайд 5: Продукт (демо, скриншоты, фичи)\nСлайд 6: Тракция (доход, пользователи, партнёры)\nСлайд 7: Бизнес-модель (как зарабатываем)\nСлайд 8: Команда (почему мы справимся)\nСлайд 9: Финансы (прогноз, юнит-экономика)\nСлайд 10: Запрос инвестиций (сколько и на что)\n\nДля каждого слайда — ключевые тезисы (3-5 пунктов) и примеры." },
+    { id: 28, category: "business", subcategory: "sales", title: "Письмо холодного предложения", preview: "Напиши холодное письмо потенциальному клиенту. Персонализация, ценность, призыв, P.S.", full: "Напиши холодное письмо.\nКлиент: [сегмент]\nПродукт: [опишите]\nБоль клиента: [какую проблему решаем]\n\nСтруктура:\n1. Тема: персонализация + выгода (до 50 символов)\n2. Приветствие: [Имя]\n3. Комплимент или общий контекст\n4. Проблема: «Возможно, вы сталкивались с...»\n5. Решение: как наш продукт помогает\n6. Социальное доказательство: кейс или отзыв\n7. Призыв: конкретное действие (ответить на письмо / созвониться)\n8. P.S.: дополнительная выгода или вопрос\n\nТон: уважительный, без «впаривания». Длина: 200-300 слов." },
+    
+    // === ПЕРЕВОД (5) ===
+    { id: 29, category: "translate", subcategory: "general", title: "Адаптивный перевод", preview: "Переведи текст на [язык] с адаптацией под культуру. Сохрани tone of voice, эмоции, игра слов.", full: "Переведи текст на [целевой язык] с адаптацией под культуру:\n\n```\n[текст для перевода]\n```\n\nТребования:\n- Сохрани tone of voice (формальный/неформальный)\n- Адаптируй культурные отсылки и юмор\n- Игру слов: сохрани смысл, меняя форму\n- Термины: устоявшиеся аналоги\n- Сохрани форматирование (абзацы, списки)\n\nВыдай: «Перевод:» + перевод + «Примечания переводчика» (где отошёл от оригинала и почему)." },
+    { id: 30, category: "translate", subcategory: "technical", title: "Перевод технической документации", preview: "Переведи техническую документацию с [язык] на [язык]. Термины единообразно, точность.", full: "Переведи техническую документацию:\n```\n[текст документации]\n```\n\nТребования:\n- Глоссарий терминов (согласование переводов)\n- Единообразие терминов по всему тексту\n- Точность: не добавляй и не убирай смысл\n- Форматирование: код, команды не переводить\n- Сноски для сложных мест\n\nПосле перевода предоставь глоссарий (10-20 терминов) и пояснения по спорным моментам." },
+    { id: 31, category: "translate", subcategory: "marketing", title: "Адаптация рекламного текста", preview: "Адаптируй рекламный текст под [язык/регион]. Сохрани эмоции, призыв, игру слов.", full: "Адаптируй рекламный текст под [язык/регион].\nОригинал:\n```\n[текст рекламы]\n```\n\nТребования:\n- Сохрани эмоциональный заряд\n- Адаптируй культурные референсы\n- Проверь длину (для заголовков, кнопок)\n- Сохрани призыв к действию\n- Игру слов — найди локальный аналог\n\nВыдай: адаптированный текст + объяснение ключевых изменений (почему так, а не иначе)." },
+    { id: 32, category: "translate", subcategory: "legal", title: "Перевод юридического договора", preview: "Переведи юридический договор с [язык] на [язык]. Точность, термины, оговорки.", full: "Переведи юридический договор:\n```\n[текст договора]\n```\n\nТребования:\n- Максимальная точность (каждый пункт)\n- Используй юридические термины целевого языка\n- Не меняй структуру пунктов\n- Оставь цифры, даты, суммы без изменений\n- Сноски для неоднозначных формулировок\n\nПосле перевода предоставь:\n- Глоссарий ключевых терминов\n- Замечания по потенциально неоднозначным местам\n- Рекомендацию: нужна ли вычитка юристом" },
+    { id: 33, category: "translate", subcategory: "medical", title: "Перевод медицинского текста", preview: "Переведи медицинский текст с [язык] на [язык]. Точность терминов, конфиденциальность.", full: "Переведи медицинский текст:\n```\n[текст: инструкция, история болезни, статья]\n```\n\nТребования:\n- Используй официальные медицинские термины (МКБ, международные)\n- Не переводи названия лекарств — используй международные непатентованные\n- Дозировки и единицы измерения — без изменений\n- Предупреждения и противопоказания — особенно точно\n- Сохрани конфиденциальность (удали ФИО, если есть)\n\nДобавь примечания для терминов, у которых есть несколько вариантов перевода." },
+    
+    // === НАУКА (5) ===
+    { id: 34, category: "science", subcategory: "physics", title: "Объясни квантовую физику", preview: "Объясни [квантовая запутанность] как 5-летнему. Аналогии, метафоры, без формул.", full: "Объясни тему [квантовая запутанность / теория относительности / термодинамика] как 5-летнему.\n\nПравила:\n- Никаких формул и терминов без объяснения\n- Аналогии из жизни (еда, игрушки, мультики)\n- Разбей на микро-шаги (максимум 7)\n- Схема словами: что с чем связано\n- В конце: одно предложение-резюме\n- Пример: «Это как ... потому что ...»\n\nФормат: диалог с ребёнком, который задаёт уточняющие вопросы." },
+    { id: 35, category: "science", subcategory: "biology", title: "Схема метаболизма", preview: "Опиши схему метаболизма простыми словами: что происходит с едой в организме, шаг за шагом.", full: "Опиши схему метаболизма простыми словами.\n\nШаг 1. Еда попадает в рот → ферменты начинают расщепление\nШаг 2. Желудок → кислоты и ферменты превращают еду в кашицу\nШаг 3. Тонкий кишечник → питательные вещества всасываются в кровь\nШаг 4. Кровь разносит глюкозу, аминокислоты, жиры по клеткам\nШаг 5. Клетки: митохондрии превращают глюкозу в энергию (АТФ)\nШаг 6. Печень и мышцы хранят излишки как гликоген\nШаг 7. Толстый кишечник → остатки выводятся\n\nДля каждого шага: что идёт на входе, что на выходе, какой фермент/орган отвечает. Добавь аналогию (фабрика, конвейер)." },
+    { id: 36, category: "science", subcategory: "math", title: "Объяснение теоремы Пифагора", preview: "Объясни теорему Пифагора: формула, доказательство, примеры, где применяется в жизни.", full: "Объясни теорему Пифагора.\n\n1. Формулировка простыми словами:\n   В прямоугольном треугольнике квадрат самой длинной стороны (гипотенузы) равен сумме квадратов двух коротких сторон (катетов).\n\n2. Формула: a² + b² = c²\n   - a и b — катеты\n   - c — гипотенуза\n\n3. Простое доказательство (через площади квадратов)\n\n4. Пример: если катеты 3 и 4, то гипотенуза = 5 (3²+4²=9+16=25, √25=5)\n\n5. Где применяется в жизни:\n   - Строительство (ровные углы)\n   - Навигация (кратчайший путь)\n   - Компьютерная графика (расчёт расстояний)\n   - Геодезия (измерение высот)\n\nДобавь задачу для самопроверки." },
+    { id: 37, category: "science", subcategory: "history", title: "Причины Первой мировой войны", preview: "Объясни причины Первой мировой войны: кратко, 5 ключевых факторов, хронология.", full: "Объясни причины Первой мировой войны.\n\n5 ключевых факторов:\n1. Система союзов: Тройственный союз (Германия, Австро-Венгрия, Италия) против Антанты (Россия, Франция, Британия)\n2. Гонка вооружений: Германия строила флот, чтобы превзойти Британию\n3. Империализм: борьба за колонии в Африке и Азии\n4. Национализм: народы хотели независимости (сербы, чехи, поляки)\n5. Убийство эрцгерцога Франца Фердинанда (28 июня 1914) — спусковой крючок\n\nХронология:\n- 28 июня: убийство в Сараево\n- 23 июля: ультиматум Австро-Венгрии Сербии\n- 28 июля: Австро-Венгрия объявляет войну Сербии\n- 1 августа: Германия объявляет войну России\n- 3 августа: Германия объявляет войну Франции\n\nВывод: цепная реакция союзов превратила локальный конфликт в мировую войну." },
+    { id: 38, category: "science", subcategory: "chemistry", title: "Что такое pH", preview: "Объясни pH: шкала от 0 до 14, кислота/щелочь, примеры из жизни, как измерить.", full: "Объясни pH (водородный показатель).\n\n1. Простыми словами:\n   pH показывает, насколько среда кислая или щелочная.\n\n2. Шкала от 0 до 14:\n   - 0-6.9: кислая среда\n   - 7: нейтральная (чистая вода)\n   - 7.1-14: щелочная среда\n\n3. Примеры из жизни:\n   - Лимонный сок: pH ~2 (очень кислый)\n   - Кофе: pH ~5\n   - Молоко: pH ~6.5\n   - Вода: pH 7\n   - Морская вода: pH ~8\n   - Мыло: pH ~10\n   - Отбеливатель: pH ~12\n\n4. Как измерить:\n   - Лакмусовая бумага (меняет цвет)\n   - pH-метр (электронный прибор)\n   - Индикаторы (фенолфталеин, метилоранж)\n\n5. Почему важно:\n   - Для организма (кровь должна быть pH 7.35-7.45)\n   - Для растений (каждый любит свой pH)\n   - Для промышленности (реакции требуют точного pH)\n\nДобавь простой опыт с капустным соком как индикатором." },
+    
+    // === СОЦСЕТИ (5) ===
+    { id: 39, category: "social", subcategory: "tiktok", title: "Вирусный сценарий для TikTok", preview: "Напиши сценарий для TikTok (15-30 сек): хук, основной контент, призыв. Тема: [тема].", full: "Напиши вирусный сценарий для TikTok.\nТема: [тема]\nДлительность: 15-30 секунд\n\nСтруктура:\n0-3 сек: ХУК — текст на экране + удивлённое лицо\n3-20 сек: ОСНОВНАЯ ЧАСТЬ — быстрый монтаж, смена кадров каждые 2-3 сек\n20-25 сек: ПРИЗЫВ — подпишись, перешли, напиши\n25-30 сек: ПОВТОР ХУКА или неожиданная концовка\n\nДобавь:\n- Звуковую дорожку (трендовую)\n- Визуальные эффекты (зелёный экран, split screen)\n- Текст на экране с таймингом\n- 5-7 хэштегов (минимум 3 с объёмом >1M просмотров)\n\nФормат: покадрово с описанием действий и текстом." },
+    { id: 40, category: "social", subcategory: "instagram", title: "Контент-план для Instagram", preview: "Составь контент-план для Instagram на месяц: рубрики, форматы, частотность, примеры постов.", full: "Составь контент-план для Instagram.\nНиша: [опишите]\nЦА: [возраст, интересы]\n\nРубрики (5-7):\n- Экспертный пост (советы, лайфхаки)\n- Личный пост (история, закулисье)\n- Развлекательный (мем, юмор)\n- Интерактив (опрос, вопрос)\n- Продающий (оффер, кейс)\n- Видео/Reels\n- Stories: закреплённые, опросы, Q&A\n\nЧастотность:\n- Лента: 3-5 постов в неделю\n- Reels: 2-4 в неделю\n- Stories: 5-10 в день\n\nПримеры на первую неделю:\nПН: эксперт → тема X\nВТ: Reels → челлендж\nСР: интерактив → опрос\nЧТ: продающий → кейс\nПТ: развлекательный → мем\nСБ: лайв / прямой эфир\n\nДобавь 10 идей для Reels." },
+    { id: 41, category: "social", subcategory: "youtube", title: "Сценарий для YouTube-ролика", preview: "Напиши сценарий для YouTube (5-7 мин): интро, основная часть (3 блока), заставка, призыв.", full: "Напиши сценарий для YouTube.\nТема: [тема]\nФормат: [обзор/туториал/интервью/влог]\nДлительность: 5-7 минут\n\nСтруктура:\n0:00-0:30 ИНТРО (что будет, почему это важно, призыв подписаться)\n0:30-1:00 ЗАСТАВКА (интро-ролик с музыкой, 5-10 сек)\n1:00-2:30 БЛОК 1 — проблема или контекст\n2:30-4:00 БЛОК 2 — решение или основное содержание\n4:00-5:30 БЛОК 3 — примеры, кейсы, лайфхаки\n5:30-6:00 ЗАКЛЮЧЕНИЕ — итоги, выводы\n6:00-7:00 ПРИЗЫВ — лайк, комментарий, подписка, ссылки\n\nДобавь:\n- Ключевые фразы для каждого блока\n- Таймкоды для навигации в описании\n- Примеры визуалов (кадры, скриншоты, b-roll)\n- Музыкальные переходы между блоками" },
+    { id: 42, category: "social", subcategory: "telegram", title: "Стратегия для Telegram-канала", preview: "Разработай стратегию для Telegram-канала: ниша, контент, рубрики, частота, привлечение.", full: "Разработай стратегию для Telegram-канала.\nНиша: [опишите]\nЦА: [кто подписчики]\n\n1. Позиционирование:\n   - О чём канал\n   - Кому будет полезен\n   - Чем отличается от других\n\n2. Рубрики (5-7):\n   - Экспертная: посты с ценностью\n   - Новостная: дайджест\n   - Интерактивная: опросы, викторины\n   - Личная: закулисье\n   - Продающая: офферы\n\n3. Частота: \n   - Посты: 2-4 в день\n   - Время: утро (9-10), обед (13-14), вечер (19-21)\n\n4. Привлечение подписчиков:\n   - Перекрёстный пиар с другими каналами\n   - Реклама у блогеров (прямые посты)\n   - Конкурсы (репост + подписка)\n   - Ссылки в соцсетях и на сайте\n\n5. Метрики: ER, CTR, retention\n\nДобавь примеры постов для каждой рубрики." },
+    { id: 43, category: "social", subcategory: "linkedin", title: "Пост для LinkedIn", preview: "Напиши экспертный пост для LinkedIn. Личная история, инсайт, призыв к обсуждению.", full: "Напиши пост для LinkedIn на тему [тема].\n\nСтруктура:\n1. Заголовок: 5-10 слов, интригующий\n2. Первый абзац: личная история или наблюдение\n3. Основная часть: 3 ключевых инсайта (с цифрами, если возможно)\n4. Призыв к обсуждению: вопрос к аудитории\n5. Хэштеги: 3-5 по теме (например, #маркетинг #управление)\n\nТребования:\n- Длина: 300-500 слов\n- Тон: экспертный, но дружелюбный\n- Добавь 2-3 тега людей (если уместно)\n- Закончи открытым вопросом\n\nПример: «Что вы думаете? Согласны или есть другой опыт?»" },
+    
+    // === КРЕАТИВ (5) ===
+    { id: 44, category: "creative", subcategory: "design", title: "Бриф для дизайнера", preview: "Составь бриф для дизайнера: проект, ЦА, стиль, цвета, сроки, бюджет.", full: "Составь бриф для дизайнера.\nТип проекта: [логотип/сайт/упаковка/баннер]\n\n1. О проекте: \n   - Название бренда\n   - Продукт/услуга\n   - Уникальное преимущество\n\n2. Целевая аудитория:\n   - Пол, возраст\n   - Интересы, ценности\n   - Где живёт (гео)\n\n3. Желаемый стиль:\n   - Ссылки на референсы (3-5)\n   - Ключевые слова: минимализм/дерзкий/эко/техно\n   - Чего избегать\n\n4. Цвета:\n   - Основные (hex)\n   - Акцентные\n   - Цвет фона\n\n5. Форматы и размеры:\n   - Где будет использоваться\n   - Размеры в пикселях\n\n6. Сроки и бюджет\n\n7. Контакт для связи" },
+    { id: 45, category: "creative", subcategory: "music", title: "Текст песни на заданную тему", preview: "Напиши текст песни на тему [тема] в стиле [жанр]. Куплеты, припев, бридж.", full: "Напиши текст песни.\nТема: [о чём]\nЖанр: [поп/рок/рэп/электроника]\nНастроение: [радостное/грустное/энергичное]\n\nСтруктура:\n- Куплет 1 (4-8 строк) — введение, образ\n- Припев (4 строки) — главная идея, запоминающийся\n- Куплет 2 (4-8 строк) — развитие\n- Припев (повтор)\n- Бридж (2-4 строки) — перелом, новый взгляд\n- Припев (2 раза) — эмоциональный пик\n- Аутро (1-2 строки) — завершение\n\nДля каждой строки — примерная мелодия/ритм (ударные слоги).\nДобавь название песни." },
+    { id: 46, category: "creative", subcategory: "writing", title: "Рассказ по заданному началу", preview: "Напиши короткий рассказ (500 слов) по началу: «[текст]». Жанр: [фантастика/детектив/романтика].", full: "Напиши короткий рассказ по началу.\nНачало: «[вставьте первую фразу]»\nЖанр: [фантастика / детектив / романтика / ужасы]\nДлина: 500 слов\n\nТребования:\n- Яркий герой (имя, желание, страх)\n- Конфликт в первой трети\n- Неожиданный поворот в середине\n- Эмоциональная развязка\n\nФормат:\n- Заголовок\n- Текст рассказа\n- Мораль или послесловие (1 предложение)\n\nСтиль: не перегружай прилагательными, больше действия и диалогов." },
+    { id: 47, category: "creative", subcategory: "game", title: "Концепция мобильной игры", preview: "Придумай концепцию мобильной игры: жанр, механика, монетизация, удержание.", full: "Придумай концепцию мобильной игры.\nЦА: [казуальная / хардкорная]\nПлатформа: iOS/Android\n\n1. Жанр:\n   - Основной (головоломка/раннер/стратегия/симулятор)\n   - Дополнительный (мета-игра)\n\n2. Сюжет и сеттинг:\n   - Где происходит действие\n   - Главный герой (кто он, его цель)\n\n3. Основная механика:\n   - Что делает игрок (тапает, свайпает, собирает)\n   - Уникальная фишка (чего нет у конкурентов)\n\n4. Прогрессия:\n   - Уровни, ресурсы, улучшения\n   - Сезонные события\n\n5. Монетизация:\n   - Реклама (rewarded video, interstitial)\n   - IAP (убрать рекламу, ускорители, скины)\n   - Battle pass\n\n6. Метрики удержания:\n   - D1, D7, D30\n   - Как вовлекаем на 1-й день, на 7-й\n\n7. Ориентировочный бюджет и команда" },
+    { id: 48, category: "creative", subcategory: "video", title: "Сценарий для Reels", preview: "Напиши сценарий для Reels/Shorts (30-45 сек): хук, 3 пункта, призыв. Тема: [тема].", full: "Напиши сценарий для Reels / YouTube Shorts.\nТема: [тема]\nДлительность: 30-45 секунд\n\nСтруктура:\n0-3 сек: ХУК — вопрос или факт + текст крупно на экране\n3-10 сек: ПРОБЛЕМА — покажи, что болит\n10-30 сек: РЕШЕНИЕ — 3 пункта по 5-7 секунд каждый\n30-40 сек: ПРИЗЫВ — подпишись, лайк, комментарий\n40-45 сек: ПОВТОР ХУКА — неожиданная концовка\n\nВизуал:\n- Быстрая смена кадров каждые 2-3 секунды\n- Зум на лицо в ключевых моментах\n- Текст поверх видео (крупный, контрастный)\n- Зацикленный финал (для бесконечного просмотра)\n\nДобавь 3 варианта музыкальных дорожек (трендовых)." },
+    
+    // === ОБРАЗОВАНИЕ (7) ===
+    { id: 49, category: "education", subcategory: "lesson", title: "План урока на 45 минут", preview: "Составь план урока по [предмет] на тему [тема]. Цели, этапы, задания, дом. задание.", full: "Составь план урока.\nПредмет: [математика/русский/история/английский]\nТема: [тема]\nКласс: [5-11]\n\nСтруктура (45 минут):\n1. Оргмомент (2 мин): приветствие, проверка отсутствующих\n2. Актуализация знаний (5 мин): вопросы по прошлой теме\n3. Постановка цели (2 мин): что узнаем, чему научимся\n4. Изучение нового (15 мин): теория + примеры\n5. Первичное закрепление (10 мин): 3-4 задания разного уровня\n6. Самостоятельная работа (7 мин): проверочная работа\n7. Рефлексия (2 мин): что понравилось, что было сложно\n8. Домашнее задание (2 мин): что сделать, как проверить\n\nДля каждого этапа — конкретные задания и вопросы." },
+    { id: 50, category: "education", subcategory: "exam", title: "Вопросы для экзамена", preview: "Сгенерируй 20 вопросов для экзамена по [предмет] на тему [тема]. Теория + задачи.", full: "Сгенерируй 20 вопросов для экзамена.\nПредмет: [программирование/маркетинг/физика]\nТема: [тема]\nУровень: [средний/продвинутый]\n\nФормат:\n- 10 теоретических вопросов (с развёрнутым ответом)\n- 5 практических задач (с кодом/расчётами)\n- 5 ситуационных кейсов (решить проблему)\n\nДля каждого вопроса:\n- Текст вопроса\n- Баллы (1-5)\n- Время на ответ\n- Критерии оценки\n- Пример правильного ответа\n\nВ конце добавь вопросы с выбором ответа (5 штук) для тестовой части." },
+    { id: 51, category: "education", subcategory: "explain", title: "Объяснение по методу Фейнмана", preview: "Объясни [тема] по методу Фейнмана: простыми словами, с примером, аналогией, без терминов.", full: "Объясни тему по методу Фейнмана.\nТема: [сложная тема]\n\nШаг 1. Назови тему и напиши всё, что знаешь о ней (2-3 предложения)\n\nШаг 2. Объясни 5-летнему ребёнку:\n   - Используй простые слова (без терминов)\n   - Короткие предложения\n   - Аналогии из жизни\n\nШаг 3. Найди пробелы:\n   - Что не можешь объяснить просто? \n   - Вернись к источнику\n\nШаг 4. Создай аналогию или историю:\n   - Сравни с чем-то знакомым (еда, спорт, мультики)\n   - Нарисуй словесную схему\n\nШаг 5. Повтори и упрости:\n   - Запиши объяснение одной фразой\n   - Проверь: если понял ребёнок — ты понял тему" }
+];
+
+// Добавляем категории
+const categories = [...new Set(prompts.map(p => p.category))];
+const categoryNames = {
+    marketing: "📢 Маркетинг",
+    coding: "💻 Программирование",
+    business: "💼 Бизнес",
+    translate: "🌐 Перевод",
+    science: "🔬 Наука",
+    social: "📱 Соцсети",
+    creative: "🎨 Креатив",
+    education: "📚 Образование"
+};
+
+const subcategoryNames = {
+    smm: "SMM", seo: "SEO", email: "Email", copywriting: "Копирайтинг", ads: "Реклама", branding: "Брендинг", analytics: "Аналитика",
+    python: "Python", javascript: "JS", sql: "SQL", algorithms: "Алгоритмы", devops: "DevOps", testing: "Тестирование", frontend: "Frontend", backend: "Backend",
+    startup: "Стартапы", finance: "Финансы", sales: "Продажи", management: "Управление", strategy: "Стратегия", hr: "HR",
+    general: "Общий", technical: "Технический", legal: "Юридический", medical: "Медицинский",
+    physics: "Физика", biology: "Биология", math: "Математика", history: "История", chemistry: "Химия",
+    tiktok: "TikTok", instagram: "Instagram", youtube: "YouTube", telegram: "Telegram", linkedin: "LinkedIn",
+    design: "Дизайн", music: "Музыка", writing: "Письмо", game: "Игры", video: "Видео",
+    lesson: "Уроки", exam: "Тесты", explain: "Объяснения", course: "Курсы"
+};
+
+let currentCategory = "all";
+let currentPage = 1;
+let itemsPerPage = 24;
+let searchTerm = "";
+
+function renderCategories() {
+    const filterDiv = document.getElementById("categoryFilter");
+    let html = `<button class="category-btn ${currentCategory === "all" ? "active" : ""}" data-category="all">📋 Все (${prompts.length})</button>`;
+    for (let cat of categories) {
+        const count = prompts.filter(p => p.category === cat).length;
+        html += `<button class="category-btn ${currentCategory === cat ? "active" : ""}" data-category="${cat}">${categoryNames[cat]} (${count})</button>`;
+    }
+    filterDiv.innerHTML = html;
+    
+    document.querySelectorAll(".category-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            currentCategory = btn.dataset.category;
+            currentPage = 1;
+            renderCategories();
             renderPrompts();
+            renderPagination();
         });
-        
-        // Инициализация
-        renderCategories();
-        renderPrompts();
-        
-        // Закрытие модалки по Escape
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") closeModal();
+    });
+}
+
+function renderPrompts() {
+    const grid = document.getElementById("promptsGrid");
+    let filtered = currentCategory === "all" ? prompts : prompts.filter(p => p.category === currentCategory);
+    
+    if (searchTerm) {
+        filtered = filtered.filter(p => 
+            p.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+            p.preview.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (p.subcategory && subcategoryNames[p.subcategory]?.toLowerCase().includes(searchTerm.toLowerCase()))
+        );
+    }
+    
+    document.getElementById("totalCount").innerText = filtered.length;
+    
+    const start = (currentPage - 1) * itemsPerPage;
+    const paginated = filtered.slice(start, start + itemsPerPage);
+    
+    if (paginated.length === 0) {
+        grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:40px;">😕 Ничего не найдено. Попробуйте другой поиск.</div>';
+        return;
+    }
+    
+    grid.innerHTML = paginated.map(p => `
+        <div class="prompt-card" onclick="showPrompt(${p.id})">
+            <div class="prompt-category">${categoryNames[p.category]} ${p.subcategory ? `<span class="prompt-subcategory">${subcategoryNames[p.subcategory] || p.subcategory}</span>` : ''}</div>
+            <div class="prompt-title">${escapeHtml(p.title)}</div>
+            <div class="prompt-preview">${escapeHtml(p.preview)}</div>
+            <button class="copy-btn" onclick="event.stopPropagation(); copyPrompt(${p.id})">📋 Скопировать промт</button>
+        </div>
+    `).join("");
+}
+
+function renderPagination() {
+    const filtered = currentCategory === "all" ? prompts : prompts.filter(p => p.category === currentCategory);
+    const totalPages = Math.ceil(filtered.length / itemsPerPage);
+    const paginationDiv = document.getElementById("pagination");
+    
+    if (totalPages <= 1) {
+        paginationDiv.innerHTML = "";
+        return;
+    }
+    
+    let html = "";
+    const maxButtons = 7;
+    let startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
+    let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+    if (endPage - startPage + 1 < maxButtons) startPage = Math.max(1, endPage - maxButtons + 1);
+    
+    if (startPage > 1) html += `<button class="page-btn" data-page="1">1</button><span style="padding:0 5px;">...</span>`;
+    for (let i = startPage; i <= endPage; i++) {
+        html += `<button class="page-btn ${i === currentPage ? "active" : ""}" data-page="${i}">${i}</button>`;
+    }
+    if (endPage < totalPages) html += `<span style="padding:0 5px;">...</span><button class="page-btn" data-page="${totalPages}">${totalPages}</button>`;
+    
+    paginationDiv.innerHTML = html;
+    document.querySelectorAll(".page-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            currentPage = parseInt(btn.dataset.page);
+            renderPrompts();
+            renderPagination();
+            window.scrollTo({ top: 0, behavior: "smooth" });
         });
-    </script>
+    });
+}
+
+function escapeHtml(text) { const div = document.createElement("div"); div.textContent = text; return div.innerHTML; }
+function showPrompt(id) { const p = prompts.find(p => p.id === id); if (!p) return; document.getElementById("modalTitle").innerText = p.title; document.getElementById("modalPrompt").value = p.full; document.getElementById("modal").classList.add("show"); }
+function copyPrompt(id) { const p = prompts.find(p => p.id === id); if (!p) return; navigator.clipboard.writeText(p.full); showToast("✅ Промт скопирован! Вставьте в Cognify AI или любой AI-чат"); }
+function copyFromModal() { const text = document.getElementById("modalPrompt").value; navigator.clipboard.writeText(text); showToast("✅ Промт скопирован!"); }
+function closeModal() { document.getElementById("modal").classList.remove("show"); }
+function showToast(msg) { const toast = document.createElement("div"); toast.className = "toast"; toast.innerText = msg; document.body.appendChild(toast); setTimeout(() => toast.remove(), 2500); }
+
+document.getElementById("searchInput").addEventListener("input", (e) => { searchTerm = e.target.value; currentPage = 1; renderPrompts(); renderPagination(); });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+
+renderCategories();
+renderPrompts();
+renderPagination();
+</script>
 </body>
 </html>
