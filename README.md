@@ -1,10 +1,8 @@
 # 🎯 Генератор промтов для нейросетей
 
-[![Live Demo](https://img.shields.io/badge/demo-online-brightgreen)](https://prompt-generator.github.io)
+[![Live Demo](https://img.shields.io/badge/demo-online-brightgreen)](https://cognify-ui.github.io/ai-prompt-generator)
 [![Made with](https://img.shields.io/badge/made_with-❤️_by_Cognify_AI-blue)](https://cognify-ui.github.io)
-[![GitHub stars](https://img.shields.io/github/stars/cognify-ui/prompt-generator)](https://github.com/cognify-ui/prompt-generator/stargazers)
-[![MIT License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
+[![GitHub stars](https://img.shields.io/github/stars/cognify-ui/ai-prompt-generator)](https://github.com/cognify-ui/ai-prompt-generator/stargazers)
 
 > 🚀 **Бесплатная библиотека из 50+ проверенных промтов** для ChatGPT, Gemini, Groq, Claude и других AI-моделей. Копируй и вставляй — получай идеальные ответы с первого раза!
 
@@ -32,7 +30,7 @@
 
 ## 🚀 Быстрый старт (30 секунд)
 
-1. Открой [**генератор промтов**](https://prompt-generator.github.io)
+1. Открой 1. Открой [**генератор промтов**](https://cognify-ui.github.io/ai-prompt-generator)
 2. Выбери категорию или воспользуйся поиском
 3. Нажми на понравившийся промт → нажми «Скопировать»
 4. Вставь промт в [**Cognify AI**](https://cognify-ui.github.io) или любой другой AI-чат
@@ -59,14 +57,16 @@
 
 ## 🔧 Локальный запуск (для разработчиков)
 
-```---
+```bash
+# Клонируем репозиторий
+git clone https://github.com/cognify-ui/ai-prompt-generator.git
+cd ai-prompt-generator
 
-[![Report Bug](https://img.shields.io/badge/Report-Bug-red)](https://github.com/cognify-ui/prompt-generator/issues/new?template=bug_report.md)
-[![Request Feature](https://img.shields.io/badge/Request-Feature-green)](https://github.com/cognify-ui/prompt-generator/issues/new?template=feature_request.md)
-[![Star on GitHub](https://img.shields.io/badge/⭐-Star_on_GitHub-yellow)](https://github.com/cognify-ui/prompt-generator)
+# Открываем в браузере (никаких зависимостей!)
+open index.html        # macOS
+start index.html       # Windows
+xdg-open index.html    # Linux
 
----
-
-**⭐ Если этот проект полезен, поставь звезду — это помогает другим найти качественные промты!**
-
-Сделано с 🧠 командой [Cognify AI](https://cognify-ui.github.io)
+# Или через локальный сервер (рекомендуется)
+python -m http.server 8000
+# → открываем http://localhost:8000
