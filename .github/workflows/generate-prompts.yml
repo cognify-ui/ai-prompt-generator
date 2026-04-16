@@ -1,10 +1,10 @@
-name: Auto-generate prompts daily
+name: Auto-generate prompts every 10 minutes
 
 on:
   schedule:
-    # Каждый день в 03:00 UTC
-    - cron: '0 3 * * *'
-  workflow_dispatch:  # Кнопка для ручного запуска
+    # Каждые 10 минут (0, 10, 20, 30, 40, 50 минут каждого часа)
+    - cron: '*/10 * * * *'
+  workflow_dispatch:  # Ручной запуск
 
 jobs:
   generate:
@@ -34,5 +34,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add index.html
-          git diff --quiet && git diff --staged --quiet || git commit -m "🤖 Auto-generate new prompts [skip ci]"
+          git diff --quiet && git diff --staged --quiet || git commit -m "🤖 Auto-generate new prompt [skip ci]"
           git push
