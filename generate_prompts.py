@@ -119,7 +119,6 @@ def parse_prompts_from_html():
     with open("index.html", "r", encoding="utf-8") as f:
         content = f.read()
     
-    # Ищем const prompts = [ ... ];
     pattern = r'const prompts = (\[[\s\S]*?\]);'
     match = re.search(pattern, content)
     
@@ -145,7 +144,7 @@ def save_prompts_to_html(prompts):
     
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(new_content)
-    print(f"✅ Saved {len(prompts)} prompts to index.html")
+    print(f"✅ Saved {len(prompts)} prompts")
 
 def generate_5_prompts():
     selected_categories = random.sample(CATEGORIES, min(5, len(CATEGORIES)))
@@ -213,7 +212,8 @@ def generate_5_prompts():
                     "subcategory": categories_info[i]["subcategory"]
                 })
         return result
-    except:
+    except Exception as e:
+        print(f"❌ JSON error: {e}")
         return []
 
 def main():
@@ -222,7 +222,7 @@ def main():
     print(f"📡 Groq: {'✅' if GROQ_API_KEY else '❌'}")
     
     existing = parse_prompts_from_html()
-    if existing is None:
+    if not existing:
         print("❌ Could not read prompts")
         return
     
