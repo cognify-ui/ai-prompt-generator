@@ -222,8 +222,9 @@ def main():
     print(f"📡 Groq: {'✅' if GROQ_API_KEY else '❌'}")
     
     existing = parse_prompts_from_html()
-    if not existing:
-        print("❌ Could not read prompts")
+    
+    if existing is None:
+        print("❌ Could not read prompts - exiting")
         return
     
     if len(existing) == 0:
