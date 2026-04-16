@@ -5,15 +5,12 @@ from datetime import datetime
 import os
 import random
 
-# API ключи из Secrets GitHub
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
 
-# API endpoints
 GEMINI_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_API_KEY}"
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 
-# Категории
 CATEGORIES = [
     {"name": "marketing", "display": "📢 Маркетинг", "sub": ["smm", "seo", "email", "copywriting", "ads", "branding", "analytics"]},
     {"name": "coding", "display": "💻 Программирование", "sub": ["python", "javascript", "sql", "algorithms", "devops", "testing", "frontend", "backend"]},
@@ -22,7 +19,19 @@ CATEGORIES = [
     {"name": "science", "display": "🔬 Наука", "sub": ["physics", "biology", "math", "history", "chemistry", "astronomy"]},
     {"name": "social", "display": "📱 Соцсети", "sub": ["tiktok", "instagram", "youtube", "telegram", "twitter", "linkedin"]},
     {"name": "creative", "display": "🎨 Креатив", "sub": ["design", "music", "writing", "game", "video"]},
-    {"name": "education", "display": "📚 Образование", "sub": ["lesson", "exam", "explain", "course", "summary"]}
+    {"name": "education", "display": "📚 Образование", "sub": ["lesson", "exam", "explain", "course", "summary"]},
+    {"name": "lifestyle", "display": "🏠 Лайфстайл", "sub": ["hobby", "diy", "gardening", "pets", "home"]},
+    {"name": "health", "display": "🏥 Здоровье", "sub": ["nutrition", "exercise", "mental", "yoga", "meditation"]},
+    {"name": "travel", "display": "✈️ Путешествия", "sub": ["planning", "destinations", "tips", "culture"]},
+    {"name": "food", "display": "🍳 Кулинария", "sub": ["recipes", "baking", "drinks", "diet"]},
+    {"name": "fitness", "display": "💪 Фитнес", "sub": ["workout", "cardio", "strength", "stretching"]},
+    {"name": "psychology", "display": "🧠 Психология", "sub": ["therapy", "coaching", "mindfulness", "emotions"]},
+    {"name": "finance", "display": "💰 Финансы", "sub": ["investing", "saving", "budgeting", "crypto"]},
+    {"name": "gaming", "display": "🎮 Игры", "sub": ["strategies", "rpg", "fps", "guides"]},
+    {"name": "music", "display": "🎵 Музыка", "sub": ["production", "songwriting", "instruments", "theory"]},
+    {"name": "art", "display": "🎨 Искусство", "sub": ["painting", "drawing", "digital", "sculpture"]},
+    {"name": "photography", "display": "📸 Фотография", "sub": ["editing", "lighting", "composition", "color"]},
+    {"name": "writing", "display": "✍️ Писательство", "sub": ["fiction", "poetry", "blogging", "journalism"]}
 ]
 
 SUBCATEGORY_NAMES = {
@@ -33,14 +42,26 @@ SUBCATEGORY_NAMES = {
     "physics": "Физика", "biology": "Биология", "math": "Математика", "history": "История", "chemistry": "Химия", "astronomy": "Астрономия",
     "tiktok": "TikTok", "instagram": "Instagram", "youtube": "YouTube", "telegram": "Telegram", "twitter": "Twitter", "linkedin": "LinkedIn",
     "design": "Дизайн", "music": "Музыка", "writing": "Письмо", "game": "Игры", "video": "Видео",
-    "lesson": "Уроки", "exam": "Тесты", "explain": "Объяснения", "course": "Курсы", "summary": "Конспекты"
+    "lesson": "Уроки", "exam": "Тесты", "explain": "Объяснения", "course": "Курсы", "summary": "Конспекты",
+    "hobby": "Хобби", "diy": "DIY", "gardening": "Садоводство", "pets": "Питомцы", "home": "Дом",
+    "nutrition": "Питание", "exercise": "Упражнения", "mental": "Ментальное", "yoga": "Йога", "meditation": "Медитация",
+    "planning": "Планирование", "destinations": "Направления", "tips": "Советы", "culture": "Культура",
+    "recipes": "Рецепты", "baking": "Выпечка", "drinks": "Напитки", "diet": "Диеты",
+    "workout": "Тренировки", "cardio": "Кардио", "strength": "Силовые", "stretching": "Растяжка",
+    "therapy": "Терапия", "coaching": "Коучинг", "mindfulness": "Осознанность", "emotions": "Эмоции",
+    "investing": "Инвестиции", "saving": "Сбережения", "budgeting": "Бюджет", "crypto": "Криптовалюты",
+    "strategies": "Стратегии", "rpg": "RPG", "fps": "FPS", "guides": "Гайды",
+    "production": "Продакшн", "songwriting": "Песни", "instruments": "Инструменты", "theory": "Теория",
+    "painting": "Живопись", "drawing": "Рисование", "digital": "Цифровое", "sculpture": "Скульптура",
+    "editing": "Редактирование", "lighting": "Освещение", "composition": "Композиция", "color": "Цвет",
+    "fiction": "Художественное", "poetry": "Поэзия", "blogging": "Блогинг", "journalism": "Журналистика"
 }
 
 TOPICS = [
-    "нейросети", "искусственный интеллект", "машинное обучение", "чат-боты",
-    "генерация контента", "анализ данных", "автоматизация", "обработка текста",
-    "SEO оптимизация", "SMM продвижение", "email маркетинг", "продажи",
-    "управление проектами", "копирайтинг", "брендинг", "аналитика", "тестирование"
+    "нейросети", "искусственный интеллект", "маркетинг", "программирование", "бизнес",
+    "перевод", "наука", "соцсети", "креатив", "образование", "лайфстайл", "здоровье",
+    "путешествия", "кулинария", "фитнес", "психология", "финансы", "игры", "музыка",
+    "искусство", "фотография", "писательство"
 ]
 
 def call_gemini(prompt):
@@ -92,35 +113,41 @@ def call_any_api(prompt):
     if result:
         print("   ✅ Used Groq")
         return result
-    print("   ❌ Both APIs failed")
     return None
 
 def parse_prompts_from_html():
     with open("index.html", "r", encoding="utf-8") as f:
         content = f.read()
+    
+    # Ищем const prompts = [ ... ];
     pattern = r'const prompts = (\[[\s\S]*?\]);'
     match = re.search(pattern, content)
+    
     if not match:
+        print("❌ Could not find 'const prompts = [...]' in index.html")
         return []
+    
     try:
-        return eval(match.group(1))
-    except:
+        prompts = eval(match.group(1))
+        print(f"✅ Found {len(prompts)} prompts")
+        return prompts
+    except Exception as e:
+        print(f"❌ Parse error: {e}")
         return []
 
 def save_prompts_to_html(prompts):
     with open("index.html", "r", encoding="utf-8") as f:
         content = f.read()
+    
     prompts_json = json.dumps(prompts, ensure_ascii=False, indent=4)
     pattern = r'(const prompts = )\[[\s\S]*?\];'
     new_content = re.sub(pattern, r'\1' + prompts_json + ';', content)
+    
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(new_content)
     print(f"✅ Saved {len(prompts)} prompts to index.html")
 
 def generate_5_prompts():
-    """Генерирует 5 уникальных промтов за один запрос"""
-    
-    # Случайные категории для разнообразия
     selected_categories = random.sample(CATEGORIES, min(5, len(CATEGORIES)))
     
     categories_info = []
@@ -135,39 +162,34 @@ def generate_5_prompts():
             "subcategory_display": SUBCATEGORY_NAMES.get(sub, sub),
             "topic": topic
         })
-        categories_text.append(f"{len(categories_text)+1}. Категория: {cat['display']}, Подкатегория: {SUBCATEGORY_NAMES.get(sub, sub)}, Тема: {topic}")
+        categories_text.append(f"{len(categories_text)+1}. {cat['display']} / {SUBCATEGORY_NAMES.get(sub, sub)} / {topic}")
     
-    categories_list = "\n".join(categories_text)
-    
-    prompt_text = f"""Ты — генератор промтов для нейросетей. Создай 5 (ПЯТЬ) уникальных промтов.
+    prompt_text = f"""Создай 5 уникальных промтов для нейросетей.
 
-Вот какие нужны промты:
-{categories_list}
+Нужны промты на темы:
+{chr(10).join(categories_text)}
 
-Формат ответа (только JSON массив из 5 объектов, без пояснений):
+Формат ответа (ТОЛЬКО JSON массив, без пояснений):
 [
   {{
     "title": "название (10-60 символов, русский)",
-    "preview": "краткое описание (100-150 символов, русский)",
-    "full": "полная инструкция с [переменными]. Длина 300-600 символов. Используй списки и шаги."
+    "preview": "краткое описание (100-150 символов)",
+    "full": "полная инструкция с [переменными]. 300-600 символов."
   }}
 ]
 
 Требования:
-- Каждый промт должен быть уникальным и полезным
+- Каждый промт уникальный и полезный
 - Добавляй [переменные в квадратных скобках]
-- Структурируй ответ (списки, шаги)
-- Не повторяй шаблонные фразы
+- Структурируй ответ
 - Язык: русский"""
     
-    print("🎯 Generating 5 prompts in one request...")
+    print("🎯 Generating 5 prompts...")
     response = call_any_api(prompt_text)
     
     if not response:
-        print("❌ API call failed")
         return []
     
-    # Очистка ответа
     response = response.strip()
     if response.startswith("```json"):
         response = response[7:]
@@ -178,53 +200,50 @@ def generate_5_prompts():
     response = response.strip()
     
     try:
-        prompts_data = json.loads(response)
-        if not isinstance(prompts_data, list):
-            print("❌ Response is not a list")
+        data = json.loads(response)
+        if not isinstance(data, list):
             return []
         
-        # Добавляем категории к каждому промту
         result = []
-        for i, prompt_data in enumerate(prompts_data[:5]):
+        for i, item in enumerate(data[:5]):
             if i < len(categories_info):
                 result.append({
-                    **prompt_data,
+                    **item,
                     "category": categories_info[i]["category"],
                     "subcategory": categories_info[i]["subcategory"]
                 })
         return result
-    except json.JSONDecodeError as e:
-        print(f"❌ JSON error: {e}")
-        print(f"Response preview: {response[:200]}...")
+    except:
         return []
 
 def main():
-    print(f"🚀 Starting auto-generation at {datetime.now()}")
-    print(f"📡 Gemini API key: {'✅ set' if GEMINI_API_KEY else '❌ missing'}")
-    print(f"📡 Groq API key: {'✅ set' if GROQ_API_KEY else '❌ missing'}")
+    print(f"🚀 Started at {datetime.now()}")
+    print(f"📡 Gemini: {'✅' if GEMINI_API_KEY else '❌'}")
+    print(f"📡 Groq: {'✅' if GROQ_API_KEY else '❌'}")
     
-    existing_prompts = parse_prompts_from_html()
-    if not existing_prompts:
-        print("❌ Could not load prompts from index.html")
+    existing = parse_prompts_from_html()
+    if existing is None:
+        print("❌ Could not read prompts")
         return
     
-    print(f"📊 Existing prompts: {len(existing_prompts)}")
+    if len(existing) == 0:
+        print("📋 No existing prompts found. Starting fresh...")
+        next_id = 1
+    else:
+        next_id = max(p["id"] for p in existing) + 1
     
-    # Генерируем 5 новых промтов
     new_prompts = generate_5_prompts()
-    
     if not new_prompts:
-        print("❌ Generation failed, no new prompts added")
+        print("❌ Generation failed")
         return
     
-    next_id = max(p["id"] for p in existing_prompts) + 1
-    for i, prompt in enumerate(new_prompts):
-        prompt["id"] = next_id + i
-        existing_prompts.append(prompt)
-        print(f"  ✅ Added: {prompt['title']}")
+    for i, p in enumerate(new_prompts):
+        p["id"] = next_id + i
+        existing.append(p)
+        print(f"  ✅ Added: {p['title']}")
     
-    save_prompts_to_html(existing_prompts)
-    print(f"📊 Total prompts now: {len(existing_prompts)}")
+    save_prompts_to_html(existing)
+    print(f"📊 Total prompts: {len(existing)}")
 
 if __name__ == "__main__":
     main()
