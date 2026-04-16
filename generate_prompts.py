@@ -65,6 +65,9 @@ TOPICS = [
     "искусство", "фотография", "писательство"
 ]
 
+# Запрещённые слова для названий промтов
+FORBIDDEN_WORDS = ["маркетинг", "стратегия", "кампания", "анализ", "разработка", "создание", "продвижение"]
+
 def call_gemini(prompt):
     if not GEMINI_API_KEY:
         return None
@@ -112,14 +115,15 @@ def call_groq(prompt):
 
 def call_any_api(prompt):
     time.sleep(1.5)
-    result = call_gemini(prompt)
-    if result:
-        print("   ✅ Used Gemini")
-        return result
-    print("   ⚠️ Gemini failed, trying Groq...")
+    # Сначала Groq (стабильнее)
     result = call_groq(prompt)
     if result:
         print("   ✅ Used Groq")
+        return result
+    print("   ⚠️ Groq failed, trying Gemini...")
+    result = call_gemini(prompt)
+    if result:
+        print("   ✅ Used Gemini")
         return result
     return None
 
@@ -186,9 +190,8 @@ def fix_json_response(response):
         response = response[:-3]
     response = response.strip()
     
-    # Экранируем кавычки внутри строк
-    import re
-    response = re.sub(r'(?<!\\)"([^"]*)"', lambda m: '"' + m.group(1).replace('"', '\\"') + '"', response)
+    # Убираем управляющие символы
+    response = re.sub(r'[\x00-\x1f\x7f]', '', response)
     
     return response
 
@@ -207,26 +210,35 @@ def generate_5_prompts_batch():
             "subcategory_display": SUBCATEGORY_NAMES.get(sub, sub),
             "topic": topic
         })
-        categories_text.append(f"{len(categories_text)+1}. {cat['display']} / {SUBCATEGORY_NAMES.get(sub, sub)} / {topic}")
+        categories_text.append(f"{len(categories_text)+1}. {cat['display']} / {SUBCATEGORY_NAMES.get(sub, sub)}")
     
-    prompt_text = f"""Создай 5 уникальных промтов для нейросетей.
+    prompt_text = f"""Ты — генератор промтов для нейросетей. Создай 5 РАЗНЫХ И НЕПОХОЖИХ промтов.
 
-Нужны промты на темы:
+Темы для промтов (только для ориентира, не используй их в названиях):
 {chr(10).join(categories_text)}
 
-Формат ответа (ТОЛЬКО JSON массив, без пояснений):
+ЗАПРЕЩЕНО использовать в названиях слова: {', '.join(FORBIDDEN_WORDS)}
+
+Примеры ХОРОШИХ названий:
+- "Как раскрутить Telegram-канал с нуля за 30 дней"
+- "Скрипт продаж для холодных звонков"
+- "10 идей для Reels, которые взорвут охваты"
+- "Чек-лист для запуска интернет-магазина"
+- "Пошаговый план увеличения прибыли на 50%"
+
+Формат ответа (ТОЛЬКО JSON массив из 5 объектов):
 [
   {{
-    "title": "название",
-    "preview": "описание",
-    "full": "инструкция с [переменными]"
+    "title": "конкретное, живое название (10-60 символов, без запрещённых слов)",
+    "preview": "что получит пользователь (100-150 символов)",
+    "full": "подробная инструкция с [переменными] (300-600 символов)"
   }}
 ]
 
-Важно: 
-- Не используй кавычки внутри строк
-- Не используй переносы строк внутри строк
-- Только валидный JSON
+Важно:
+- Названия должны быть УНИКАЛЬНЫМИ и ЦЕПЛЯЮЩИМИ
+- Добавляй цифры, примеры, конкретные шаги
+- Используй формат "Как...", "Скрипт...", "Чек-лист...", "План..."
 - Язык: русский"""
     
     print("🎯 Generating 5 prompts...")
@@ -250,6 +262,11 @@ def generate_5_prompts_batch():
         result = []
         for i, item in enumerate(data[:5]):
             if i < len(categories_info):
+                title = item.get("title", "")
+                # Проверка на запрещённые слова
+                if any(word in title.lower() for word in FORBIDDEN_WORDS):
+                    print(f"   ⚠️ Forbidden word in title: {title[:40]}... skipping")
+                    continue
                 result.append({
                     **item,
                     "category": categories_info[i]["category"],
@@ -291,8 +308,8 @@ def generate_unique_prompts(existing_prompts, target_count=5, max_attempts=10):
 
 def main():
     print(f"🚀 Started at {datetime.now()}")
-    print(f"📡 Gemini: {'✅' if GEMINI_API_KEY else '❌'}")
     print(f"📡 Groq: {'✅' if GROQ_API_KEY else '❌'}")
+    print(f"📡 Gemini: {'✅' if GEMINI_API_KEY else '❌'}")
     
     existing = parse_prompts_from_html()
     
