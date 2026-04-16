@@ -4,6 +4,7 @@ import requests
 from datetime import datetime
 import os
 import random
+import time
 
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
@@ -70,15 +71,18 @@ def call_gemini(prompt):
     headers = {"Content-Type": "application/json"}
     data = {
         "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"temperature": 0.8, "maxOutputTokens": 1200}
+        "generationConfig": {"temperature": 0.9, "maxOutputTokens": 1200}
     }
     try:
         response = requests.post(GEMINI_URL, headers=headers, json=data, timeout=45)
         if response.status_code == 200:
             result = response.json()
             return result["candidates"][0]["content"]["parts"][0]["text"]
+        else:
+            print(f"   ⚠️ Gemini HTTP {response.status_code}")
         return None
-    except Exception:
+    except Exception as e:
+        print(f"   ⚠️ Gemini exception: {e}")
         return None
 
 def call_groq(prompt):
@@ -99,11 +103,15 @@ def call_groq(prompt):
         if response.status_code == 200:
             result = response.json()
             return result["choices"][0]["message"]["content"]
+        else:
+            print(f"   ⚠️ Groq HTTP {response.status_code}")
         return None
-    except Exception:
+    except Exception as e:
+        print(f"   ⚠️ Groq exception: {e}")
         return None
 
 def call_any_api(prompt):
+    time.sleep(1.5)
     result = call_gemini(prompt)
     if result:
         print("   ✅ Used Gemini")
@@ -147,7 +155,6 @@ def save_prompts_to_html(prompts):
     print(f"✅ Saved {len(prompts)} prompts")
 
 def is_duplicate(new_prompt, existing_prompts):
-    """Проверяет, есть ли уже такой промт в базе"""
     new_title = new_prompt.get("title", "").lower().strip()
     new_preview = new_prompt.get("preview", "").lower().strip()[:50]
     
@@ -155,26 +162,37 @@ def is_duplicate(new_prompt, existing_prompts):
         existing_title = existing.get("title", "").lower().strip()
         existing_preview = existing.get("preview", "").lower().strip()[:50]
         
-        # Точное совпадение заголовка
         if new_title == existing_title:
             return True
-        
-        # Совпадение начала preview
         if new_preview and new_preview == existing_preview:
             return True
         
-        # Частичное совпадение заголовка (70% слов)
         new_words = set(new_title.split())
         existing_words = set(existing_title.split())
         if new_words and existing_words:
             common = len(new_words & existing_words)
             if common / max(len(new_words), len(existing_words)) > 0.7:
                 return True
-    
     return False
 
+def fix_json_response(response):
+    """Пытается исправить повреждённый JSON ответ"""
+    response = response.strip()
+    if response.startswith("```json"):
+        response = response[7:]
+    if response.startswith("```"):
+        response = response[3:]
+    if response.endswith("```"):
+        response = response[:-3]
+    response = response.strip()
+    
+    # Экранируем кавычки внутри строк
+    import re
+    response = re.sub(r'(?<!\\)"([^"]*)"', lambda m: '"' + m.group(1).replace('"', '\\"') + '"', response)
+    
+    return response
+
 def generate_5_prompts_batch():
-    """Генерирует 5 промтов (внутренняя функция)"""
     selected_categories = random.sample(CATEGORIES, min(5, len(CATEGORIES)))
     
     categories_info = []
@@ -191,7 +209,7 @@ def generate_5_prompts_batch():
         })
         categories_text.append(f"{len(categories_text)+1}. {cat['display']} / {SUBCATEGORY_NAMES.get(sub, sub)} / {topic}")
     
-    prompt_text = f"""Создай 5 уникальных промтов для нейросетей. ВАЖНО: промты должны быть РАЗНЫМИ и НЕ ПОВТОРЯТЬ стандартные шаблоны.
+    prompt_text = f"""Создай 5 уникальных промтов для нейросетей.
 
 Нужны промты на темы:
 {chr(10).join(categories_text)}
@@ -199,17 +217,16 @@ def generate_5_prompts_batch():
 Формат ответа (ТОЛЬКО JSON массив, без пояснений):
 [
   {{
-    "title": "название (10-60 символов, русский, уникальное, не шаблонное)",
-    "preview": "краткое описание (100-150 символов)",
-    "full": "полная инструкция с [переменными]. 300-600 символов."
+    "title": "название",
+    "preview": "описание",
+    "full": "инструкция с [переменными]"
   }}
 ]
 
-Требования:
-- Каждый промт должен быть УНИКАЛЬНЫМ и не похожим на другие
-- Избегай общих фраз типа "создание", "разработка", "анализ" без контекста
-- Добавляй конкретные [переменные в квадратных скобках]
-- Структурируй ответ
+Важно: 
+- Не используй кавычки внутри строк
+- Не используй переносы строк внутри строк
+- Только валидный JSON
 - Язык: русский"""
     
     print("🎯 Generating 5 prompts...")
@@ -218,14 +235,12 @@ def generate_5_prompts_batch():
     if not response:
         return []
     
-    response = response.strip()
-    if response.startswith("```json"):
-        response = response[7:]
-    if response.startswith("```"):
-        response = response[3:]
-    if response.endswith("```"):
-        response = response[:-3]
-    response = response.strip()
+    response = fix_json_response(response)
+    
+    # Пробуем найти JSON массив
+    match = re.search(r'\[\s*\{.*\}\s*\]', response, re.DOTALL)
+    if match:
+        response = match.group(0)
     
     try:
         data = json.loads(response)
@@ -241,12 +256,12 @@ def generate_5_prompts_batch():
                     "subcategory": categories_info[i]["subcategory"]
                 })
         return result
-    except Exception as e:
+    except json.JSONDecodeError as e:
         print(f"❌ JSON error: {e}")
+        print(f"   Response: {response[:200]}...")
         return []
 
 def generate_unique_prompts(existing_prompts, target_count=5, max_attempts=10):
-    """Генерирует уникальные промты, пропуская дубликаты"""
     new_prompts = []
     attempts = 0
     
@@ -257,8 +272,9 @@ def generate_unique_prompts(existing_prompts, target_count=5, max_attempts=10):
         generated = generate_5_prompts_batch()
         
         if not generated:
-            print("   ❌ Generation failed")
-            break
+            print("   ❌ Generation failed, retrying...")
+            time.sleep(2)
+            continue
         
         for prompt in generated:
             if not is_duplicate(prompt, existing_prompts + new_prompts):
@@ -268,7 +284,8 @@ def generate_unique_prompts(existing_prompts, target_count=5, max_attempts=10):
                 print(f"   ⚠️ Duplicate skipped: {prompt['title'][:50]}...")
         
         if len(new_prompts) < target_count:
-            print(f"   📌 Need {target_count - len(new_prompts)} more, retrying...")
+            print(f"   📌 Need {target_count - len(new_prompts)} more, retrying in 3 seconds...")
+            time.sleep(3)
     
     return new_prompts[:target_count]
 
@@ -291,7 +308,6 @@ def main():
     else:
         next_id = max(p["id"] for p in existing) + 1
     
-    # Генерируем 5 уникальных промтов
     new_prompts = generate_unique_prompts(existing, target_count=5, max_attempts=10)
     
     if not new_prompts:
